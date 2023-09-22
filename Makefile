@@ -1,8 +1,9 @@
 NAME = scop
 CFLAGS = -Wall -Wextra -Werror -std=c++20
-LDFLAGS = -lGL -lGLU -lglfw
-SRC = 
-
+LDFLAGS = -lglfw
+SRC =	scop.cpp \
+		object.cpp
+		
 SRC_O = $(SRC:%.cpp=%.o)
 RM = rm -f
 
