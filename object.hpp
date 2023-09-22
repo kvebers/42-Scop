@@ -2,8 +2,6 @@
 #define OBJECT_HPP
 
 #include "scop.hpp"
-#include <string>
-#include <vector>
 
 class Object {
 private:
@@ -11,14 +9,15 @@ private:
   std::string _mtl;
   std::vector<std::string> _objData;
   std::vector<std::string> _mtlData;
+  GLFWwindow *_window;
   void ReadObj();
   void ProcessData();
+
 public:
   Object();
   Object(std::string &object, std::string &mtl);
   ~Object();
   void RenderObject();
-
 };
 
 #endif
