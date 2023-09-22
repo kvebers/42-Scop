@@ -1,6 +1,7 @@
 #include "object.hpp"
 #include <string>
 #include <utility>
+#include <vector>
 
 Object::Object() {
   std::cout << "The Object has been constructed" << std::endl;
@@ -18,16 +19,27 @@ void Object::ReadObj() {
   std::string line;
   while (std::getline(obj, line)) {
     _objData.push_back(line);
-    std::cout << (line) << std::endl;
   }
   obj.close();
   std::ifstream mtl(_obj);
   while (std::getline(mtl, line)) {
     _mtlData.push_back(line);
-    std::cout << (line) << std::endl;
   }
   mtl.close();
 }
 
+void Object::ProcessData() {
+  for (std::vector<std::string>::iterator it = _objData.begin();
+       it != _objData.end(); it++) {
+    if ((*it)[0] != 'v' || (*it)[0] != 'f') {
+      it->erase();
+    } else
+      break;
+  }
+}
+
 void Object::RenderObject() {
-    ReadObj(); }
+  ReadObj();
+  ProcessData();
+  
+}

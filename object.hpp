@@ -11,13 +11,14 @@ private:
   std::string _mtl;
   std::vector<std::string> _objData;
   std::vector<std::string> _mtlData;
-
+  void ReadObj();
+  void ProcessData();
 public:
   Object();
   Object(std::string &object, std::string &mtl);
   ~Object();
   void RenderObject();
-  void ReadObj();
+
 };
 
 #endif

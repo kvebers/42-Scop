@@ -1,6 +1,6 @@
 NAME = scop
 CFLAGS = -Wall -Wextra -Werror -std=c++20
-LDFLAGS = -lglfw
+LDFLAGS = -lglfw -framework OpenGL
 SRC =	scop.cpp \
 		object.cpp
 		
