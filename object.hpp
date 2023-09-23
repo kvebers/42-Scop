@@ -12,6 +12,7 @@ private:
   std::vector<std::string> _pointData;
   std::vector<std::string> _triangleData;
   GLFWwindow *_window;
+
   void ReadObj();
   void ProcessData();
   void SplitObject();
