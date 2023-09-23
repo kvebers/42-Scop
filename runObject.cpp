@@ -15,6 +15,12 @@ void Object::RenderObject() {
   while (!glfwWindowShouldClose(_window)) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // Here I can Input my own stuff
+    glBegin(GL_TRIANGLES);
+    glVertex2f(-0.5f, -0.5f);
+    glVertex2f(0.5f, -0.5f);
+    glVertex2f(0.0f, 0.5f);
+    glEnd();
+
     glfwSwapBuffers(_window);
     glfwPollEvents();
   }

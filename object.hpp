@@ -14,6 +14,7 @@ private:
   GLFWwindow *_window;
   void ReadObj();
   void ProcessData();
+  void SplitObject();
 
 public:
   Object();

@@ -1,7 +1,7 @@
 NAME = scop
-CFLAGS = -Wall -Wextra -Werror -std=c++20
+CFLAGS = -Wall -Wextra -Werror -Wno-c++11-extensions -std=c++11
 LDFLAGS = -L/Users/${USER}/.brew/Cellar/glfw/3.3.8/lib -lglfw -framework OpenGL
-INCLUDES = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/glfw
+INCLUDES = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/include
 SRC =	scop.cpp \
 		object.cpp \
 		objectParser.cpp \
@@ -15,6 +15,10 @@ all: libs $(NAME)
 
 $(NAME): $(SRC_O)
 		c++ $(CFLAGS) $(INCLUDES) $(SRC_O) $(LDFLAGS) -o $(NAME)
+
+
+%.o: %.cpp
+	c++ $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 libs:
 		@if ! brew ls --versions glfw > /dev/null; then \

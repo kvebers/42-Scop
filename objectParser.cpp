@@ -18,9 +18,9 @@ void Object::ReadObj() {
 void Object::SplitObject() {
   for (auto it = _objData.begin(); it != _objData.end(); it++) {
     if ((*it)[0] == 'v')
-      _pointData.push_back();
+      _pointData.push_back(*it);
     if ((*it)[0] == 'f')
-      _triangleData.push_back();
+      _triangleData.push_back(*it);
   }
 }
 
@@ -38,4 +38,5 @@ void Object::ProcessData() {
     else
       break;
   }
+  SplitObject();
 }
