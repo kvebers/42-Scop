@@ -1,4 +1,5 @@
 #include "object.hpp"
+#include <vector>
 
 void Object::ReadObj() {
   std::ifstream obj(_obj);
@@ -14,17 +15,24 @@ void Object::ReadObj() {
   mtl.close();
 }
 
+void Object::SplitObject() {
+  for (auto it = _objData.begin(); it != _objData.end(); it++) {
+    if ((*it)[0] == 'v')
+      _pointData.push_back();
+    if ((*it)[0] == 'f')
+      _triangleData.push_back();
+  }
+}
+
 void Object::ProcessData() {
-  for (std::vector<std::string>::iterator it = _objData.begin();
-       it != _objData.end(); it++) {
+  for (auto it = _objData.begin(); it != _objData.end(); it++) {
     if ((*it).length() == 0 || ((*it)[0] != 'v' && (*it)[0] != 'f'))
       it->erase();
     else
       break;
   }
 
-  for (std::vector<std::string>::iterator it = _mtlData.begin();
-       it != _mtlData.end(); it++) {
+  for (auto it = _mtlData.begin(); it != _mtlData.end(); it++) {
     if ((*it).length() == 0 || (*it).find("newmtl") == std::string::npos)
       it->erase();
     else
