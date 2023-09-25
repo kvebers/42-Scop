@@ -23,7 +23,8 @@ struct Vector3 {
 };
 
 struct Triangle {
-  Vector2 points[3];
+  int mode;
+  Vector3 points[4];
 };
 
 class Object {
@@ -34,7 +35,6 @@ private:
   std::vector<std::string> _mtlData;
   std::vector<std::string> _pointData;
   std::vector<std::string> _triangleData;
-  std::vector<Vector2> _normalizedPointData;
   std::vector<Vector3> _pointCordData;
   std::vector<Triangle> _drawData;
   std::vector<Material> _material;
@@ -50,12 +50,13 @@ private:
   void MakeLight();
   void SetupTriangles();
   void SetupRender();
-  Vector2 TransferTo2DTriangle(Vector3 &triangle);
 
   void InitGLFW();
   void RunLoop();
   void DrawTriangle(Triangle &triangle);
+  void DrawRectangle(Triangle &rectangle);
   void Draw();
+  void RandomColor();
 
 public:
   Object();

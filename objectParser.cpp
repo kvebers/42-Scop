@@ -93,19 +93,6 @@ void Object::RemoveBlend() {
   }
 }
 
-void Object::MakeLight() {
-  _lightData.x = 100;
-  _lightData.y = 100;
-  _focalLen = 60.0f;
-}
-
-Vector2 Object::TransferTo2DTriangle(Vector3 &triangle) {
-  Vector2 vector;
-  vector.x = (triangle.x / triangle.z) / _focalLen;
-  vector.y = (triangle.y / triangle.z) / _focalLen;
-  return vector;
-}
-
 void Object::SetupTriangles() {
   try {
     for (auto it = _pointData.begin(); it != _pointData.end(); it++) {
@@ -117,7 +104,6 @@ void Object::SetupTriangles() {
       temp.y = std::stof(y);
       temp.z = std::stof(z);
       _pointCordData.push_back(temp);
-      _normalizedPointData.push_back(TransferTo2DTriangle(temp));
     }
   } catch (const std::exception error) {
     std::cerr << "Error triangle data: " << error.what() << std::endl;
@@ -128,13 +114,23 @@ void Object::SetupTriangles() {
 void Object::SetupRender() {
   try {
     for (auto it = _triangleData.begin(); it != _triangleData.end(); it++) {
-      std::string prefix, first, sec, third;
+      std::string prefix, first, sec, third, forth;
       std::istringstream iss(*it);
       iss >> prefix >> first >> sec >> third;
       Triangle temp;
-      temp.points[0] = _normalizedPointData[std::stoi(first) - 1];
-      temp.points[1] = _normalizedPointData[std::stoi(sec) - 1];
-      temp.points[2] = _normalizedPointData[std::stoi(third) - 1];
+      temp.points[0] = _pointCordData[std::stoi(first) - 1];
+      temp.points[1] = _pointCordData[std::stoi(sec) - 1];
+      temp.points[2] = _pointCordData[std::stoi(third) - 1];
+      if (!(iss >> forth)) {
+        temp.points[3].x = -1;
+        temp.points[3].y = -1;
+        temp.points[3].z = -1;
+        temp.mode = 1;
+        forth.clear();
+      } else {
+        temp.mode = 0;
+        temp.points[3] = _pointCordData[std::stoi(forth) - 1];
+      }
       _drawData.push_back(temp);
     }
   } catch (const std::exception error) {
