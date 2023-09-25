@@ -3,6 +3,16 @@
 
 #include "scop.hpp"
 
+struct Material {
+  float Ns;
+  float Ka[3];
+  float Kd[3];
+  float Ks[3];
+  float Ni;
+  float d;
+  int illum;
+};
+
 class Object {
 private:
   std::string _obj;
@@ -11,11 +21,13 @@ private:
   std::vector<std::string> _mtlData;
   std::vector<std::string> _pointData;
   std::vector<std::string> _triangleData;
+  Material _material;
   GLFWwindow *_window;
 
   void ReadObj();
   void ProcessData();
   void SplitObject();
+  void MakeMaterial();
 
 public:
   Object();

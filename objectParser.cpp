@@ -1,4 +1,7 @@
 #include "object.hpp"
+#include <exception>
+#include <iostream>
+#include <ostream>
 #include <vector>
 
 void Object::ReadObj() {
@@ -24,6 +27,53 @@ void Object::SplitObject() {
   }
 }
 
+void Object::MakeMaterial() {
+  for (auto it = _mtlData.begin(); it != _mtlData.end(); it++) {
+    std::string prefix;
+    std::istringstream iss(*it);
+    iss >> prefix;
+    std::cout << prefix << std::endl;
+    try {
+      if (prefix == "Ns")
+        _material.Ns = std::stof(it->substr(3));
+      else if (prefix == "Ka") {
+        std::string ka1, ka2, ka3;
+        iss >> ka1 >> ka2 >> ka3;
+        _material.Ka[0] = std::stof(ka1);
+        _material.Ka[1] = std::stof(ka2);
+        _material.Ka[2] = std::stof(ka3);
+      } else if (prefix == "Kd") {
+        std::string kd1, kd2, kd3;
+        iss >> kd1 >> kd2 >> kd3;
+        _material.Kd[0] = std::stof(kd1);
+        _material.Kd[1] = std::stof(kd2);
+        _material.Kd[2] = std::stof(kd3);
+      } else if (prefix == "Ks") {
+        std::string ks1, ks2, ks3;
+        iss >> ks1 >> ks2 >> ks3;
+        _material.Ks[0] = std::stof(ks1);
+        _material.Ks[1] = std::stof(ks2);
+        _material.Ks[2] = std::stof(ks3);
+      } else if (prefix == "Ni") {
+        std::string ni;
+        iss >> ni;
+        _material.Ni = std::stof(ni);
+      } else if (prefix == "d") {
+        std::string d;
+        iss >> d;
+        _material.d = std::stof(d);
+      } else if (prefix == "illum") {
+        std::string illum;
+        iss >> illum;
+        _material.illum = std::stof(illum);
+      }
+    } catch (const std::exception &error) {
+      std::cerr << "Error: " << error.what() << std::endl;
+      exit(127);
+    }
+  }
+}
+
 void Object::ProcessData() {
   for (auto it = _objData.begin(); it != _objData.end(); it++) {
     if ((*it).length() == 0 || ((*it)[0] != 'v' && (*it)[0] != 'f'))
@@ -38,5 +88,6 @@ void Object::ProcessData() {
     else
       break;
   }
+  MakeMaterial();
   SplitObject();
 }
