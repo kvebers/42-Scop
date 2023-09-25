@@ -23,7 +23,7 @@ struct Vector3 {
 };
 
 struct Triangle {
-  float point1, point2, point3;
+  Vector2 points[3];
 };
 
 class Object {
@@ -37,9 +37,10 @@ private:
   std::vector<Vector2> _normalizedPointData;
   std::vector<Vector3> _pointCordData;
   std::vector<Triangle> _drawData;
+  std::vector<Material> _material;
   Vector2 _lightData;
-  Material _material;
   GLFWwindow *_window;
+  float _focalLen;
 
   void ReadObj();
   void ProcessData();
@@ -48,7 +49,13 @@ private:
   void RemoveBlend();
   void MakeLight();
   void SetupTriangles();
-  void TransferTo2DTriangle();
+  void SetupRender();
+  Vector2 TransferTo2DTriangle(Vector3 &triangle);
+
+  void InitGLFW();
+  void RunLoop();
+  void DrawTriangle(Triangle &triangle);
+  void Draw();
 
 public:
   Object();
