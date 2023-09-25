@@ -2,6 +2,7 @@
 #include <exception>
 #include <iostream>
 #include <ostream>
+#include <sys/errno.h>
 #include <vector>
 
 void Object::ReadObj() {
@@ -95,9 +96,31 @@ void Object::MakeLight() {
   _lightData.y = 100;
 }
 
+void Object::TransferTo2DTriangle() {}
+
+void Object::SetupTriangles {
+  try {
+    for (auto it = _pointData.begin(); it != _pointData.end(); it++) {
+      std::string prefix, x, y, z;
+      std::istringstream iss(*it);
+      iss >> prefix >> x >> y >> z;
+      std::vector<Vector3> temp;
+      temp.x = std::stof(x);
+      temp.y = std::stof(y);
+      temp.z = std::stof(z);
+      _pointCordData.push_back(temp);
+    }
+  } catch (const std::exception error) {
+    std::cerr << "Error triangle data: " << error.what() << std::endl;
+    exit(127);
+  }
+}
+
 void Object::ProcessData() {
+  ReadObj();
   RemoveBlend();
   MakeMaterial();
-  MakeLigt();
+  MakeLight();
   SplitObject();
+  SetupTriangles();
 }

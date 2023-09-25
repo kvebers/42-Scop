@@ -47,6 +47,8 @@ private:
   void MakeMaterial();
   void RemoveBlend();
   void MakeLight();
+  void SetupTriangles();
+  void TransferTo2DTriangle();
 
 public:
   Object();

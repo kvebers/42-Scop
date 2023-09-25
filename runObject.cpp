@@ -1,7 +1,6 @@
 #include "object.hpp"
 
 void Object::RenderObject() {
-  ReadObj();
   ProcessData();
   glfwInit();
   _window = glfwCreateWindow(1920, 1080, "SCOP", NULL, NULL);
