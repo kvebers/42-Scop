@@ -74,7 +74,7 @@ void Object::MakeMaterial() {
   }
 }
 
-void Object::ProcessData() {
+void Object::RemoveBlend() {
   for (auto it = _objData.begin(); it != _objData.end(); it++) {
     if ((*it).length() == 0 || ((*it)[0] != 'v' && (*it)[0] != 'f'))
       it->erase();
@@ -88,6 +88,16 @@ void Object::ProcessData() {
     else
       break;
   }
+}
+
+void Object::MakeLight() {
+  _lightData.x = 100;
+  _lightData.y = 100;
+}
+
+void Object::ProcessData() {
+  RemoveBlend();
   MakeMaterial();
+  MakeLigt();
   SplitObject();
 }

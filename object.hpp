@@ -2,6 +2,7 @@
 #define OBJECT_HPP
 
 #include "scop.hpp"
+#include <vector>
 
 struct Material {
   float Ns;
@@ -13,6 +14,18 @@ struct Material {
   int illum;
 };
 
+struct Vector2 {
+  float x, y;
+};
+
+struct Vector3 {
+  float x, y, z;
+};
+
+struct Triangle {
+  float point1, point2, point3;
+};
+
 class Object {
 private:
   std::string _obj;
@@ -21,6 +34,10 @@ private:
   std::vector<std::string> _mtlData;
   std::vector<std::string> _pointData;
   std::vector<std::string> _triangleData;
+  std::vector<Vector2> _normalizedPointData;
+  std::vector<Vector3> _pointCordData;
+  std::vector<Triangle> _drawData;
+  Vector2 _lightData;
   Material _material;
   GLFWwindow *_window;
 
@@ -28,6 +45,8 @@ private:
   void ProcessData();
   void SplitObject();
   void MakeMaterial();
+  void RemoveBlend();
+  void MakeLight();
 
 public:
   Object();
