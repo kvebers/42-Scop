@@ -5,7 +5,8 @@ INCLUDES = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/include
 SRC =	scop.cpp \
 		object.cpp \
 		objectParser.cpp \
-		runObject.cpp
+		runObject.cpp \
+		mouseUtils.cpp
 
 
 SRC_O = $(SRC:%.cpp=%.o)

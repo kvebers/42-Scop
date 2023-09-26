@@ -1,4 +1,5 @@
 #include "object.hpp"
+#include <cstddef>
 #include <exception>
 #include <iostream>
 #include <ostream>
@@ -118,18 +119,16 @@ void Object::SetupRender() {
       std::istringstream iss(*it);
       iss >> prefix >> first >> sec >> third;
       Triangle temp;
-      temp.points[0] = _pointCordData[std::stoi(first) - 1];
-      temp.points[1] = _pointCordData[std::stoi(sec) - 1];
-      temp.points[2] = _pointCordData[std::stoi(third) - 1];
+      temp.points[0] = &_pointCordData[std::stoi(first) - 1];
+      temp.points[1] = &_pointCordData[std::stoi(sec) - 1];
+      temp.points[2] = &_pointCordData[std::stoi(third) - 1];
       if (!(iss >> forth)) {
-        temp.points[3].x = -1;
-        temp.points[3].y = -1;
-        temp.points[3].z = -1;
+        temp.points[3] = nullptr;
         temp.mode = 1;
         forth.clear();
       } else {
         temp.mode = 0;
-        temp.points[3] = _pointCordData[std::stoi(forth) - 1];
+        temp.points[3] = &_pointCordData[std::stoi(forth) - 1];
       }
       _drawData.push_back(temp);
     }
