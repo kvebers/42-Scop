@@ -9,23 +9,17 @@ void Object::RandomColor() {
 
 void Object::DrawRectangle(Triangle &rectangle) {
   RandomColor();
-  glBegin(GL_TRIANGLES);
-  glVertex3f(rectangle.points[0].x / _focalLen,
+  glBegin(GL_QUADS);
+  glVertex3f(rectangle.points[0].x / _focalLen / _proportion,
              rectangle.points[0].y / _focalLen,
              rectangle.points[0].z / _focalLen);
-  glVertex3f(rectangle.points[1].x / _focalLen,
+  glVertex3f(rectangle.points[1].x / _focalLen / _proportion,
              rectangle.points[1].y / _focalLen,
              rectangle.points[1].z / _focalLen);
-  glVertex3f(rectangle.points[2].x / _focalLen,
+  glVertex3f(rectangle.points[2].x / _focalLen / _proportion,
              rectangle.points[2].y / _focalLen,
              rectangle.points[2].z / _focalLen);
-  glVertex3f(rectangle.points[1].x / _focalLen,
-             rectangle.points[1].y / _focalLen,
-             rectangle.points[1].z / _focalLen);
-  glVertex3f(rectangle.points[2].x / _focalLen,
-             rectangle.points[2].y / _focalLen,
-             rectangle.points[2].z / _focalLen);
-  glVertex3f(rectangle.points[3].x / _focalLen,
+  glVertex3f(rectangle.points[3].x / _focalLen / _proportion,
              rectangle.points[3].y / _focalLen,
              rectangle.points[3].z / _focalLen);
   glEnd();
@@ -34,17 +28,20 @@ void Object::DrawRectangle(Triangle &rectangle) {
 void Object::DrawTriangle(Triangle &triangle) {
   RandomColor();
   glBegin(GL_TRIANGLES);
-  glVertex3f(triangle.points[0].x / _focalLen, triangle.points[0].y / _focalLen,
+  glVertex3f(triangle.points[0].x / _focalLen / _proportion,
+             triangle.points[0].y / _focalLen,
              triangle.points[0].z / _focalLen);
-  glVertex3f(triangle.points[1].x / _focalLen, triangle.points[1].y / _focalLen,
+  glVertex3f(triangle.points[1].x / _focalLen / _proportion,
+             triangle.points[1].y / _focalLen,
              triangle.points[1].z / _focalLen);
-  glVertex3f(triangle.points[2].x / _focalLen, triangle.points[2].y / _focalLen,
+  glVertex3f(triangle.points[2].x / _focalLen / _proportion,
+             triangle.points[2].y / _focalLen,
              triangle.points[2].z / _focalLen);
   glEnd();
 }
 
 void Object::InitGLFW() {
-  _window = glfwCreateWindow(1920, 1920, "SCOP", NULL, NULL);
+  _window = glfwCreateWindow(2560, 1920, "SCOP", NULL, NULL);
   if (!_window) {
     std::cerr << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
@@ -54,11 +51,13 @@ void Object::InitGLFW() {
 }
 
 void Object::Draw() {
+  glfwGetWindowSize(_window, &_width, &_height);
+  _proportion = static_cast<float>(_width) / static_cast<float>(_height);
   for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
     Triangle tri = *it;
-    if (tri.mode == 0)
+    if (tri.mode == 1)
       DrawTriangle(*it);
-    else if (tri.mode == 1)
+    else if (tri.mode == 0)
       DrawRectangle(*it);
   }
 }

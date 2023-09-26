@@ -39,6 +39,9 @@ private:
   std::vector<Triangle> _drawData;
   std::vector<Material> _material;
   Vector2 _lightData;
+  int _width;
+  int _height;
+  float _proportion;
   GLFWwindow *_window;
   float _focalLen;
 
