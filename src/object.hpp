@@ -1,7 +1,7 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
-#include "scop.hpp"
+#include "../scop.hpp"
 #include <vector>
 
 struct Material {
@@ -70,7 +70,7 @@ private:
   void DrawRectangle(Triangle &rectangle);
   void Draw();
   // Just cool function
-  void RandomColor();
+  void Shader();
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,
                                   int mods);
   static void scrollCallback(GLFWwindow *window, double xoffset,

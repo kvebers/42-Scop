@@ -1,14 +1,11 @@
 #include "object.hpp"
 
-void Object::RandomColor() {
-  float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-  float g = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-  float b = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-  glColor3f(r, g, b);
+void Object::Shader() {
+  glColor3f(15, 15, 1);
 }
 
 void Object::DrawRectangle(Triangle &rectangle) {
-  RandomColor();
+  Shader();
   glBegin(GL_QUADS);
   glVertex3f(rectangle.points[0]->x / _focalLen / _proportion,
              rectangle.points[0]->y / _focalLen,
@@ -26,7 +23,7 @@ void Object::DrawRectangle(Triangle &rectangle) {
 }
 
 void Object::DrawTriangle(Triangle &triangle) {
-  RandomColor();
+  Shader();
   glBegin(GL_TRIANGLES);
   glVertex3f(triangle.points[0]->x / _focalLen / _proportion,
              triangle.points[0]->y / _focalLen,
