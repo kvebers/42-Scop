@@ -1,4 +1,5 @@
 #include "object.hpp"
+#include <OpenGL/OpenGL.h>
 
 void Object::DrawRectangle(Triangle &rectangle) {
   glBegin(GL_QUADS);
@@ -68,6 +69,10 @@ void Object::RunLoop() {
   while (!glfwWindowShouldClose(_window)) {
     glfwSetScrollCallback(_window, Object::scrollCallback);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDepthMask(GL_FALSE);
+    glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Draw();
     glfwSwapBuffers(_window);
     glfwPollEvents();
@@ -76,15 +81,15 @@ void Object::RunLoop() {
 
 void Object::MakeLight() {
   _focalLen = 5.0f;
-  _lightData.x = 1;
-  _lightData.y = 1;
-  _lightData.z = 1;
-  _lightColor.x = 1;
-  _lightColor.y = 1;
-  _lightColor.z = 1;
-  _viewPos.x = 0;
-  _viewPos.y = 0;
-  _viewPos.z = 0;
+  _lightData.x = 1.0f;
+  _lightData.y = 1.0f;
+  _lightData.z = 1.0f;
+  _lightColor.x = 1.0f;
+  _lightColor.y = 1.0f;
+  _lightColor.z = 1.0f;
+  _viewPos.x = 0.0f;
+  _viewPos.y = 0.0f;
+  _viewPos.z = 0.0f;
 }
 
 void Object::RenderObject() {

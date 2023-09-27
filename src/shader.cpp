@@ -102,11 +102,9 @@ void Object::Shader(Vector3 *point) {
   Vector3 lightDir = Normalize(Sub(_lightData, *point));
   Vector3 viewDir = Normalize(Sub(_viewPos, *point));
   Vector3 ambient = Multiply(_material[0].Ka, _lightColor);
-
-  // Diffuse term
   Vector3 diffIntensity = Max(Dot(normal, lightDir), def);
-  Vector3 diffuse =
-      Multiply(Multiply(_material[0].Kd, _lightColor), diffIntensity);
+  Vector3 diffHelper = Multiply(_material[0].Kd, _lightColor);
+  Vector3 diffuse = Multiply(diffHelper, diffIntensity);
   Vector3 reflectDir = Reflect(Sub(def, lightDir), normal);
   Vector3 specIntensity =
       Pow(Max(Dot(viewDir, reflectDir), def), _material[0].Ns);
@@ -115,6 +113,5 @@ void Object::Shader(Vector3 *point) {
 
   // Combine terms
   Vector3 result = Add(ambient, Add(diffuse, specular));
-  std::cout << result.x << " " << result.y << " " << result.z << std::endl;
   glColor4f(result.x, result.y, result.z, _material[0].d);
 }

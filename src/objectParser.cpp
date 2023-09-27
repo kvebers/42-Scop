@@ -24,13 +24,13 @@ void Object::SplitObject() {
 }
 
 void Object::MakeMaterial() {
-  for (auto it = _mtlData.begin(); it != _mtlData.end(); it++) {
+  try {
     Material material;
-    std::string prefix;
-    std::istringstream iss(*it);
-    iss >> prefix;
-    std::cout << prefix << std::endl;
-    try {
+    material.d = 1;
+    for (auto it = _mtlData.begin(); it != _mtlData.end(); it++) {
+      std::string prefix;
+      std::istringstream iss(*it);
+      iss >> prefix;
       if (prefix == "Ns")
         material.Ns = std::stof(it->substr(3));
       else if (prefix == "Ka") {
@@ -42,9 +42,11 @@ void Object::MakeMaterial() {
       } else if (prefix == "Kd") {
         std::string kd1, kd2, kd3;
         iss >> kd1 >> kd2 >> kd3;
+        std::cout << kd1 << kd2 << kd3 << std::endl;
         material.Kd.x = std::stof(kd1);
         material.Kd.y = std::stof(kd2);
         material.Kd.z = std::stof(kd3);
+        std::cout << material.Kd.x << std::endl;
       } else if (prefix == "Ks") {
         std::string ks1, ks2, ks3;
         iss >> ks1 >> ks2 >> ks3;
@@ -64,11 +66,14 @@ void Object::MakeMaterial() {
         iss >> illum;
         material.illum = std::stof(illum);
       }
-      _material.push_back(material);
-    } catch (const std::exception &error) {
-      std::cerr << "Error invalid material: " << error.what() << std::endl;
-      exit(127);
     }
+    _material.push_back(material);
+    std::cout << _material[0].d << std::endl;
+
+    // std::cout << _material[0].d << std::endl;
+  } catch (const std::exception &error) {
+    std::cerr << "Error invalid material: " << error.what() << std::endl;
+    exit(127);
   }
 }
 
