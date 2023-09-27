@@ -1,10 +1,4 @@
 #include "object.hpp"
-#include <cstddef>
-#include <exception>
-#include <iostream>
-#include <ostream>
-#include <sys/errno.h>
-#include <vector>
 
 void Object::ReadObj() {
   std::ifstream obj(_obj);
@@ -42,21 +36,21 @@ void Object::MakeMaterial() {
       else if (prefix == "Ka") {
         std::string ka1, ka2, ka3;
         iss >> ka1 >> ka2 >> ka3;
-        material.Ka[0] = std::stof(ka1);
-        material.Ka[1] = std::stof(ka2);
-        material.Ka[2] = std::stof(ka3);
+        material.Ka.x = std::stof(ka1);
+        material.Ka.y = std::stof(ka2);
+        material.Ka.z = std::stof(ka3);
       } else if (prefix == "Kd") {
         std::string kd1, kd2, kd3;
         iss >> kd1 >> kd2 >> kd3;
-        material.Kd[0] = std::stof(kd1);
-        material.Kd[1] = std::stof(kd2);
-        material.Kd[2] = std::stof(kd3);
+        material.Kd.x = std::stof(kd1);
+        material.Kd.y = std::stof(kd2);
+        material.Kd.z = std::stof(kd3);
       } else if (prefix == "Ks") {
         std::string ks1, ks2, ks3;
         iss >> ks1 >> ks2 >> ks3;
-        material.Ks[0] = std::stof(ks1);
-        material.Ks[1] = std::stof(ks2);
-        material.Ks[2] = std::stof(ks3);
+        material.Ks.x = std::stof(ks1);
+        material.Ks.y = std::stof(ks2);
+        material.Ks.z = std::stof(ks3);
       } else if (prefix == "Ni") {
         std::string ni;
         iss >> ni;

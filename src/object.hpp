@@ -4,22 +4,22 @@
 #include "../scop.hpp"
 #include <vector>
 
-struct Material {
-  float Ns;
-  float Ka[3];
-  float Kd[3];
-  float Ks[3];
-  float Ni;
-  float d;
-  int illum;
-};
-
 struct Vector2 {
   float x, y;
 };
 
 struct Vector3 {
   float x, y, z;
+};
+
+struct Material {
+  float Ns;
+  Vector3 Ka;
+  Vector3 Kd;
+  Vector3 Ks;
+  float Ni;
+  float d;
+  int illum;
 };
 
 struct Triangle {
@@ -42,7 +42,9 @@ private:
   std::vector<Triangle> _drawData;
   // Vector of materials
   std::vector<Material> _material;
-  Vector2 _lightData;
+  Vector3 _lightData;
+  Vector3 _lightColor;
+  Vector3 _viewPos;
 
   // window managment stuff
   int _width;

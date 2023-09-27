@@ -1,22 +1,5 @@
 #include "object.hpp"
 
-void Object::Shader(Vector3 *point) {
-  Vector3 magnitude;
-  float magHelper =
-      sqrt(point->x * point->x + point->y + point->y + point->z * point->z);
-  if (magHelper == 0) {
-    magnitude.x = 0;
-    magnitude.y = 0;
-    magnitude.z = 0;
-  } else {
-    magnitude.x = point->x / magHelper;
-    magnitude.y = point->y / magHelper;
-    magnitude.z = point->z / magHelper;
-  }
-
-  glColor3f(magnitude.x, magnitude.y, magnitude.z);
-}
-
 void Object::DrawRectangle(Triangle &rectangle) {
   glBegin(GL_QUADS);
   Shader(rectangle.points[0]);
@@ -91,7 +74,18 @@ void Object::RunLoop() {
   }
 }
 
-void Object::MakeLight() { _focalLen = 5.0f; }
+void Object::MakeLight() {
+  _focalLen = 5.0f;
+  _lightData.x = 1;
+  _lightData.y = 1;
+  _lightData.z = 1;
+  _lightColor.x = 1;
+  _lightColor.y = 1;
+  _lightColor.z = 1;
+  _viewPos.x = 0;
+  _viewPos.y = 0;
+  _viewPos.z = 0;
+}
 
 void Object::RenderObject() {
   ProcessData();
