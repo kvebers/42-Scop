@@ -1,21 +1,37 @@
 #include "object.hpp"
 
-void Object::Shader() {
-  glColor3f(15, 15, 1);
+void Object::Shader(Vector3 *point) {
+  Vector3 magnitude;
+  float magHelper =
+      sqrt(point->x * point->x + point->y + point->y + point->z * point->z);
+  if (magHelper == 0) {
+    magnitude.x = 0;
+    magnitude.y = 0;
+    magnitude.z = 0;
+  } else {
+    magnitude.x = point->x / magHelper;
+    magnitude.y = point->y / magHelper;
+    magnitude.z = point->z / magHelper;
+  }
+
+  glColor3f(magnitude.x, magnitude.y, magnitude.z);
 }
 
 void Object::DrawRectangle(Triangle &rectangle) {
-  Shader();
   glBegin(GL_QUADS);
+  Shader(rectangle.points[0]);
   glVertex3f(rectangle.points[0]->x / _focalLen / _proportion,
              rectangle.points[0]->y / _focalLen,
              rectangle.points[0]->z / _focalLen);
+  Shader(rectangle.points[1]);
   glVertex3f(rectangle.points[1]->x / _focalLen / _proportion,
              rectangle.points[1]->y / _focalLen,
              rectangle.points[1]->z / _focalLen);
+  Shader(rectangle.points[2]);
   glVertex3f(rectangle.points[2]->x / _focalLen / _proportion,
              rectangle.points[2]->y / _focalLen,
              rectangle.points[2]->z / _focalLen);
+  Shader(rectangle.points[3]);
   glVertex3f(rectangle.points[3]->x / _focalLen / _proportion,
              rectangle.points[3]->y / _focalLen,
              rectangle.points[3]->z / _focalLen);
@@ -23,14 +39,16 @@ void Object::DrawRectangle(Triangle &rectangle) {
 }
 
 void Object::DrawTriangle(Triangle &triangle) {
-  Shader();
   glBegin(GL_TRIANGLES);
+  Shader(triangle.points[0]);
   glVertex3f(triangle.points[0]->x / _focalLen / _proportion,
              triangle.points[0]->y / _focalLen,
              triangle.points[0]->z / _focalLen);
+  Shader(triangle.points[1]);
   glVertex3f(triangle.points[1]->x / _focalLen / _proportion,
              triangle.points[1]->y / _focalLen,
              triangle.points[1]->z / _focalLen);
+  Shader(triangle.points[2]);
   glVertex3f(triangle.points[2]->x / _focalLen / _proportion,
              triangle.points[2]->y / _focalLen,
              triangle.points[2]->z / _focalLen);

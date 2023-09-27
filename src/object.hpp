@@ -70,7 +70,7 @@ private:
   void DrawRectangle(Triangle &rectangle);
   void Draw();
   // Just cool function
-  void Shader();
+  void Shader(Vector3 *point);
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,
                                   int mods);
   static void scrollCallback(GLFWwindow *window, double xoffset,
