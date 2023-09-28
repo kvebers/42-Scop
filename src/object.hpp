@@ -55,6 +55,7 @@ private:
   float _focalLen;
   double _lastX;
   double _lastY;
+  bool _isMoved;
   bool _isDragging;
   // Parsing
   void ReadObj();
@@ -80,6 +81,8 @@ private:
   static void scrollCallback(GLFWwindow *window, double xoffset,
                              double yoffset);
   static void handleMouseMove(GLFWwindow *window, double xpos, double ypos);
+  static void handleRotation(Object *objInstance, double xpos, double ypos);
+  static void handleMoving(Object *objInstance, double xpos, double ypos);
 
 public:
   Object();
