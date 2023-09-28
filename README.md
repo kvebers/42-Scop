@@ -1,5 +1,4 @@
 
-https://github.com/kvebers/42-Scop/assets/49612380/95a90553-2d52-465c-9c78-866f1b548f56
 # 42-Scop
 
 ### Fifth Iteration
