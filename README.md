@@ -21,6 +21,8 @@
 ### Forth Iteration
 ![ezgif com-video-to-gif (1)](https://github.com/kvebers/42-Scop/assets/49612380/bd7a4f4e-0e4b-475b-98fc-57d6307f0252)
 
+#### Added Light mapping
+#### Added Rotation
 
 ### Third Iteration
 
