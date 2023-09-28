@@ -2,7 +2,7 @@
 # 42-Scop
 
 ### 6th Iteration
-<img width="1757" alt="Screen Shot 2023-09-28 at 4 09 17 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/93634d64-43a4-405f-a1c0-b4e89e3783a9">
+<img width="600" alt="Screen Shot 2023-09-28 at 4 09 17 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/93634d64-43a4-405f-a1c0-b4e89e3783a9">
 
 ![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/c992961d-570f-4d26-a00f-d0887f8641cf)
 
