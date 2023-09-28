@@ -1,6 +1,6 @@
 NAME = scop
 CFLAGS = -Wall -Wextra -Werror -Wno-c++11-extensions -std=c++11
-LDFLAGS = -L/Users/${USER}/.brew/Cellar/glfw/3.3.8/lib -lglfw -framework OpenGL
+LDFLAGS = -L/Users/${USER}/.brew/Cellar/glfw/3.3.8/lib -lglfw -framework OpenGL -framework CoreGraphics -framework CoreFoundation
 INCLUDES = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/include
 SRC =	src/scop.cpp \
 		src/object.cpp \
@@ -8,7 +8,8 @@ SRC =	src/scop.cpp \
 		src/runObject.cpp \
 		src/mouseUtils.cpp \
 		src/shader.cpp \
-		src/keyHook.cpp
+		src/keyHook.cpp \
+		src/defaultMaterials.cpp
 
 
 SRC_O = $(SRC:%.cpp=%.o)

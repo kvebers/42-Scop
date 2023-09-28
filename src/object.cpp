@@ -1,8 +1,4 @@
 #include "object.hpp"
-#include <cstdio>
-#include <string>
-#include <utility>
-#include <vector>
 
 Object::Object() {
   std::cout << "The Object has been constructed" << std::endl;

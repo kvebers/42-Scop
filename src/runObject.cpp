@@ -3,18 +3,26 @@
 void Object::DrawRectangle(Triangle &rectangle) {
   glBegin(GL_QUADS);
   Shader(rectangle.points[0]);
+  if (_renderTexture == 1)
+    glTexCoord2f(0.0f, 0.0f);
   glVertex3f(rectangle.points[0]->x / _focalLen / _proportion,
              rectangle.points[0]->y / _focalLen,
              rectangle.points[0]->z / _focalLen);
   Shader(rectangle.points[1]);
+  if (_renderTexture == 1)
+    glTexCoord2f(1.0f, 0.0f);
   glVertex3f(rectangle.points[1]->x / _focalLen / _proportion,
              rectangle.points[1]->y / _focalLen,
              rectangle.points[1]->z / _focalLen);
   Shader(rectangle.points[2]);
+  if (_renderTexture == 1)
+    glTexCoord2f(1.0f, 1.0f);
   glVertex3f(rectangle.points[2]->x / _focalLen / _proportion,
              rectangle.points[2]->y / _focalLen,
              rectangle.points[2]->z / _focalLen);
   Shader(rectangle.points[3]);
+  if (_renderTexture == 1)
+    glTexCoord2f(0.0f, 1.0f);
   glVertex3f(rectangle.points[3]->x / _focalLen / _proportion,
              rectangle.points[3]->y / _focalLen,
              rectangle.points[3]->z / _focalLen);
@@ -24,18 +32,37 @@ void Object::DrawRectangle(Triangle &rectangle) {
 void Object::DrawTriangle(Triangle &triangle) {
   glBegin(GL_TRIANGLES);
   Shader(triangle.points[0]);
+  if (_renderTexture == 1)
+    glTexCoord2f(0.0f, 0.0f);
   glVertex3f(triangle.points[0]->x / _focalLen / _proportion,
              triangle.points[0]->y / _focalLen,
              triangle.points[0]->z / _focalLen);
   Shader(triangle.points[1]);
+  if (_renderTexture == 1)
+    glTexCoord2f(0.0f, 1.0f);
   glVertex3f(triangle.points[1]->x / _focalLen / _proportion,
              triangle.points[1]->y / _focalLen,
              triangle.points[1]->z / _focalLen);
   Shader(triangle.points[2]);
+  if (_renderTexture == 1)
+    glTexCoord2f(0.5f, 0.5f);
   glVertex3f(triangle.points[2]->x / _focalLen / _proportion,
              triangle.points[2]->y / _focalLen,
              triangle.points[2]->z / _focalLen);
   glEnd();
+}
+
+void Object::Draw() {
+  glfwGetWindowSize(_window, &_width, &_height);
+  _proportion = static_cast<float>(_width) / static_cast<float>(_height);
+  CalculateMedium();
+  for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
+    Triangle tri = *it;
+    if (tri.mode == 1)
+      DrawTriangle(*it);
+    else if (tri.mode == 0)
+      DrawRectangle(*it);
+  }
 }
 
 void Object::InitGLFW() {
@@ -56,32 +83,12 @@ void Object::InitGLFW() {
 void Object::CalculateMedium() {
   for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
     Triangle tri = *it;
-    tri.medium = tri.points[0]->z;
-    if (tri.medium > tri.points[1]->z)
-      tri.medium = tri.points[1]->z;
-    if (tri.medium > tri.points[2]->z)
-      tri.medium = tri.points[2]->z;
-    if (tri.mode == 0)
-      if (tri.medium > tri.points[3]->z)
-        tri.medium = tri.points[3]->z;
+    tri.medium = (tri.points[0]->z + tri.points[1]->z + tri.points[2]->z) / 3;
     it->medium = tri.medium;
   }
   std::sort(
       _drawData.begin(), _drawData.end(),
       [](const Triangle &a, const Triangle &b) { return a.medium < b.medium; });
-}
-
-void Object::Draw() {
-  glfwGetWindowSize(_window, &_width, &_height);
-  _proportion = static_cast<float>(_width) / static_cast<float>(_height);
-  CalculateMedium();
-  for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
-    Triangle tri = *it;
-    if (tri.mode == 1)
-      DrawTriangle(*it);
-    else if (tri.mode == 0)
-      DrawRectangle(*it);
-  }
 }
 
 void Object::RunLoop() {
@@ -94,6 +101,12 @@ void Object::RunLoop() {
       glEnable(GL_DEPTH_TEST);
     } else
       glDepthMask(GL_TRUE);
+    if (_renderTexture == 1) {
+      glEnable(GL_TEXTURE_2D);
+      glBindTexture(GL_TEXTURE_2D, _texture2D);
+    } else {
+      glDisable(GL_TEXTURE_2D);
+    }
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Draw();
     glfwSwapBuffers(_window);
@@ -114,6 +127,7 @@ void Object::MakeLight() {
   _viewPos.z = 0.0f;
   _currentMaterial = 0;
   _colorMode = 1;
+  _renderTexture = 0;
 }
 
 void Object::RenderObject() {
@@ -122,6 +136,8 @@ void Object::RenderObject() {
   MakeLight();
   InitGLFW();
   glfwMakeContextCurrent(_window);
+  std::string path = "textures/riga.jpg";
+  SetupTexture(path);
   centerObject(_window);
   RunLoop();
   glfwTerminate();

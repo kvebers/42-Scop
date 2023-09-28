@@ -1,4 +1,6 @@
 #include "object.hpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 void Object::ReadObj() {
   std::ifstream obj(_obj);
@@ -25,8 +27,7 @@ void Object::SplitObject() {
 
 void Object::MakeMaterial() {
   try {
-    Material material;
-    material.d = 1;
+    Material material = SetupDefaultMaterial();
     for (auto it = _mtlData.begin(); it != _mtlData.end(); it++) {
       std::string prefix;
       std::istringstream iss(*it);
@@ -42,11 +43,9 @@ void Object::MakeMaterial() {
       } else if (prefix == "Kd") {
         std::string kd1, kd2, kd3;
         iss >> kd1 >> kd2 >> kd3;
-        std::cout << kd1 << kd2 << kd3 << std::endl;
         material.Kd.x = std::stof(kd1);
         material.Kd.y = std::stof(kd2);
         material.Kd.z = std::stof(kd3);
-        std::cout << material.Kd.x << std::endl;
       } else if (prefix == "Ks") {
         std::string ks1, ks2, ks3;
         iss >> ks1 >> ks2 >> ks3;
@@ -134,6 +133,34 @@ void Object::SetupRender() {
   }
 }
 
+void Object::SetupTexture(std::string &path) {
+  int width;
+  int height;
+  int channels;
+  GLint maxTextureSize;
+  unsigned char *data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+  if (data) {
+    glGenTextures(1, &_texture2D);
+    glBindTexture(GL_TEXTURE_2D, _texture2D);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+    if (width > maxTextureSize || height > maxTextureSize) {
+      std::cout << "Texture to big" << std::endl;
+      return;
+    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+                 GL_UNSIGNED_BYTE, data);
+    std::cout << "Here" << std::endl;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    stbi_image_free(data);
+  } else {
+    std::cout << "Error Loading the image" << std::endl;
+  }
+}
+
 void Object::ProcessData() {
   ReadObj();
   RemoveBlend();
@@ -142,4 +169,5 @@ void Object::ProcessData() {
   SplitObject();
   SetupTriangles();
   SetupRender();
+  addMoreDefaults();
 }

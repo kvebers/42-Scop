@@ -2,7 +2,7 @@
 #define OBJECT_HPP
 
 #include "../scop.hpp"
-#include <vector>
+
 
 struct Vector2 {
   float x, y;
@@ -61,6 +61,10 @@ private:
   // Color and Material Mangment
   int _currentMaterial;
   float _colorMode;
+  int _renderTexture;
+  // Texture
+  GLuint _texture2D;
+
   // Parsing
   void ReadObj();
   void ProcessData();
@@ -71,6 +75,8 @@ private:
   void SetupTriangles();
   void SetupRender();
   void InitGLFW();
+  Material SetupDefaultMaterial();
+  void addMoreDefaults();
   // Main loop
   void RunLoop();
   // Draw Figures
@@ -93,6 +99,7 @@ private:
   static void centerObject(GLFWwindow *window);
   static void colorMode(Object *objInstance);
   static void changeColor(float *color, int colorMode);
+  void SetupTexture(std::string &path);
 
 public:
   Object();

@@ -34,8 +34,7 @@ void Object::colorMode(Object *objInstance) {
 }
 
 void Object::changeColor(float *color, int colorMode) {
-  *color += colorMode * 0.08;
-  std::cout << *color << std::endl;
+  *color += colorMode * 0.1;
   if (*color > 1.0f) {
     *color = 1.0f;
   } else if (*color < 0.0f) {
@@ -50,6 +49,29 @@ void Object::keyCallback(GLFWwindow *window, int key, int scancode, int action,
   Object *objInstance = static_cast<Object *>(glfwGetWindowUserPointer(window));
   if (action == GLFW_PRESS || action == GLFW_REPEAT) {
     switch (key) {
+    case GLFW_KEY_1:
+      objInstance->_currentMaterial = 0;
+      objInstance->_renderTexture = 0;
+      break;
+    case GLFW_KEY_2:
+      objInstance->_currentMaterial = 1;
+      objInstance->_renderTexture = 0;
+      break;
+    case GLFW_KEY_3:
+      objInstance->_currentMaterial = 2;
+      objInstance->_renderTexture = 0;
+      break;
+    case GLFW_KEY_4:
+      objInstance->_currentMaterial = 3;
+      objInstance->_renderTexture = 0;
+      break;
+    case GLFW_KEY_5:
+      objInstance->_currentMaterial = 4;
+      objInstance->_renderTexture = 0;
+      break;
+    case GLFW_KEY_6:
+      objInstance->_renderTexture = 1;
+      break;
     case GLFW_KEY_Q:
       changeColor(&objInstance->_material[objInstance->_currentMaterial].Ka.x,
                   objInstance->_colorMode);
