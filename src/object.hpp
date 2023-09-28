@@ -3,7 +3,6 @@
 
 #include "../scop.hpp"
 
-
 struct Vector2 {
   float x, y;
 };
@@ -46,7 +45,6 @@ private:
   Vector3 _lightData;
   Vector3 _lightColor;
   Vector3 _viewPos;
-
   // window managment stuff
   int _width;
   int _height;
@@ -75,6 +73,7 @@ private:
   void SetupTriangles();
   void SetupRender();
   void InitGLFW();
+
   Material SetupDefaultMaterial();
   void addMoreDefaults();
   // Main loop
@@ -99,7 +98,7 @@ private:
   static void centerObject(GLFWwindow *window);
   static void colorMode(Object *objInstance);
   static void changeColor(float *color, int colorMode);
-  void SetupTexture(std::string &path);
+  void SetupTexture(std::string path);
 
 public:
   Object();

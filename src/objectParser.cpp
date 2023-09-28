@@ -133,7 +133,7 @@ void Object::SetupRender() {
   }
 }
 
-void Object::SetupTexture(std::string &path) {
+void Object::SetupTexture(std::string path) {
   int width;
   int height;
   int channels;
@@ -145,19 +145,19 @@ void Object::SetupTexture(std::string &path) {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
     if (width > maxTextureSize || height > maxTextureSize) {
-      std::cout << "Texture to big" << std::endl;
-      return;
+      std::cerr << "Texture to big" << std::endl;
+      exit(127);
     }
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
                  GL_UNSIGNED_BYTE, data);
-    std::cout << "Here" << std::endl;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     stbi_image_free(data);
   } else {
-    std::cout << "Error Loading the image" << std::endl;
+    std::cerr << "Error Loading the image" << std::endl;
+    exit(127);
   }
 }
 

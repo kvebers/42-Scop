@@ -101,7 +101,7 @@ void Object::RunLoop() {
       glEnable(GL_DEPTH_TEST);
     } else
       glDepthMask(GL_TRUE);
-    if (_renderTexture == 1) {
+    if (_renderTexture == 1 || _renderTexture == 2) {
       glEnable(GL_TEXTURE_2D);
       glBindTexture(GL_TEXTURE_2D, _texture2D);
     } else {
@@ -136,8 +136,7 @@ void Object::RenderObject() {
   MakeLight();
   InitGLFW();
   glfwMakeContextCurrent(_window);
-  std::string path = "textures/riga.jpg";
-  SetupTexture(path);
+  SetupTexture("textures/ok.jpg");
   centerObject(_window);
   RunLoop();
   glfwTerminate();
