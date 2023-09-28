@@ -52,11 +52,15 @@ private:
   int _height;
   float _proportion;
   GLFWwindow *_window;
+  // Camera Managment and Position
   float _focalLen;
   double _lastX;
   double _lastY;
   bool _isMoved;
   bool _isDragging;
+  // Color and Material Mangment
+  int _currentMaterial;
+  float _colorMode;
   // Parsing
   void ReadObj();
   void ProcessData();
@@ -74,6 +78,7 @@ private:
   void DrawRectangle(Triangle &rectangle);
   void Draw();
   void CalculateMedium();
+
   // Just cool function
   void Shader(Vector3 *point);
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,
@@ -83,6 +88,11 @@ private:
   static void handleMouseMove(GLFWwindow *window, double xpos, double ypos);
   static void handleRotation(Object *objInstance, double xpos, double ypos);
   static void handleMoving(Object *objInstance, double xpos, double ypos);
+  static void keyCallback(GLFWwindow *window, int key, int scancode, int action,
+                          int mods);
+  static void centerObject(GLFWwindow *window);
+  static void colorMode(Object *objInstance);
+  static void changeColor(float *color, int colorMode);
 
 public:
   Object();

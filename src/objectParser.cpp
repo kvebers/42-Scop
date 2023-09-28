@@ -68,9 +68,6 @@ void Object::MakeMaterial() {
       }
     }
     _material.push_back(material);
-    std::cout << _material[0].d << std::endl;
-
-    // std::cout << _material[0].d << std::endl;
   } catch (const std::exception &error) {
     std::cerr << "Error invalid material: " << error.what() << std::endl;
     exit(127);

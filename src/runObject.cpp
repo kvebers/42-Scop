@@ -49,7 +49,8 @@ void Object::InitGLFW() {
   glfwSetWindowUserPointer(_window, this);
   glfwSetMouseButtonCallback(_window, mouseButtonCallback);
   glfwSetCursorPosCallback(_window, handleMouseMove);
-  glfwSetScrollCallback(_window, Object::scrollCallback);
+  glfwSetScrollCallback(_window, scrollCallback);
+  glfwSetKeyCallback(_window, keyCallback);
 }
 
 void Object::CalculateMedium() {
@@ -87,7 +88,7 @@ void Object::RunLoop() {
   while (!glfwWindowShouldClose(_window)) {
     glfwSetScrollCallback(_window, Object::scrollCallback);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if (_material[0].d < 1) {
+    if (_material[_currentMaterial].d < 1) {
       glDepthMask(GL_FALSE);
       glEnable(GL_BLEND);
       glEnable(GL_DEPTH_TEST);
@@ -111,6 +112,8 @@ void Object::MakeLight() {
   _viewPos.x = 0.0f;
   _viewPos.y = 0.0f;
   _viewPos.z = 0.0f;
+  _currentMaterial = 0;
+  _colorMode = 1;
 }
 
 void Object::RenderObject() {
@@ -119,6 +122,7 @@ void Object::RenderObject() {
   MakeLight();
   InitGLFW();
   glfwMakeContextCurrent(_window);
+  centerObject(_window);
   RunLoop();
   glfwTerminate();
 }

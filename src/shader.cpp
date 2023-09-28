@@ -101,17 +101,17 @@ void Object::Shader(Vector3 *point) {
   normal.z = 0;
   Vector3 lightDir = Normalize(Sub(_lightData, *point));
   Vector3 viewDir = Normalize(Sub(_viewPos, *point));
-  Vector3 ambient = Multiply(_material[0].Ka, _lightColor);
+  Vector3 ambient = Multiply(_material[_currentMaterial].Ka, _lightColor);
   Vector3 diffIntensity = Max(Dot(normal, lightDir), def);
-  Vector3 diffHelper = Multiply(_material[0].Kd, _lightColor);
+  Vector3 diffHelper = Multiply(_material[_currentMaterial].Kd, _lightColor);
   Vector3 diffuse = Multiply(diffHelper, diffIntensity);
   Vector3 reflectDir = Reflect(Sub(def, lightDir), normal);
   Vector3 specIntensity =
-      Pow(Max(Dot(viewDir, reflectDir), def), _material[0].Ns);
+      Pow(Max(Dot(viewDir, reflectDir), def), _material[_currentMaterial].Ns);
   Vector3 specular =
-      Multiply(Multiply(_material[0].Ks, _lightColor), specIntensity);
+      Multiply(Multiply(_material[_currentMaterial].Ks, _lightColor), specIntensity);
 
   // Combine terms
   Vector3 result = Add(ambient, Add(diffuse, specular));
-  glColor4f(result.x, result.y, result.z, _material[0].d);
+  glColor4f(result.x, result.y, result.z, _material[_currentMaterial].d);
 }

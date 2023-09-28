@@ -7,7 +7,8 @@ SRC =	src/scop.cpp \
 		src/objectParser.cpp \
 		src/runObject.cpp \
 		src/mouseUtils.cpp \
-		src/shader.cpp
+		src/shader.cpp \
+		src/keyHook.cpp
 
 
 SRC_O = $(SRC:%.cpp=%.o)
