@@ -3,7 +3,8 @@
 
 ### 6th Iteration
 
-![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/5ee76b96-1c65-4977-b1eb-328928fe74a5)
+![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/c992961d-570f-4d26-a00f-d0887f8641cf)
+
 
 #### Added QWERT To change Colors
 #### Added 4 default materials
