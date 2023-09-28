@@ -101,7 +101,7 @@ void Object::RunLoop() {
       glEnable(GL_DEPTH_TEST);
     } else
       glDepthMask(GL_TRUE);
-    if (_renderTexture == 1 || _renderTexture == 2) {
+    if (_renderTexture == 1) {
       glEnable(GL_TEXTURE_2D);
       glBindTexture(GL_TEXTURE_2D, _texture2D);
     } else {
