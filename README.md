@@ -1,6 +1,10 @@
 
 # 42-Scop
 
+### 6th Iteration
+
+![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/5ee76b96-1c65-4977-b1eb-328928fe74a5)
+
 ### Fifth Iteration
 
 ![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/162c9690-dd3e-4284-8f7e-f5ed88d0bc4a)
