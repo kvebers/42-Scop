@@ -3,6 +3,7 @@
 
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
+#include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
 #include <algorithm>
 #include <cstddef>

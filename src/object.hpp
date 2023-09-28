@@ -24,6 +24,7 @@ struct Material {
 
 struct Triangle {
   int mode;
+  float medium;
   Vector3 *points[4];
 };
 
@@ -71,6 +72,7 @@ private:
   void DrawTriangle(Triangle &triangle);
   void DrawRectangle(Triangle &rectangle);
   void Draw();
+  void CalculateMedium();
   // Just cool function
   void Shader(Vector3 *point);
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,

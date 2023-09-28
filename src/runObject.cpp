@@ -1,5 +1,4 @@
 #include "object.hpp"
-#include <OpenGL/OpenGL.h>
 
 void Object::DrawRectangle(Triangle &rectangle) {
   glBegin(GL_QUADS);
@@ -53,9 +52,28 @@ void Object::InitGLFW() {
   glfwSetScrollCallback(_window, Object::scrollCallback);
 }
 
+void Object::CalculateMedium() {
+  for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
+    Triangle tri = *it;
+    tri.medium = tri.points[0]->z;
+    if (tri.medium > tri.points[1]->z)
+      tri.medium = tri.points[1]->z;
+    if (tri.medium > tri.points[2]->z)
+      tri.medium = tri.points[2]->z;
+    if (tri.mode == 0)
+      if (tri.medium > tri.points[3]->z)
+        tri.medium = tri.points[3]->z;
+    it->medium = tri.medium;
+  }
+  std::sort(
+      _drawData.begin(), _drawData.end(),
+      [](const Triangle &a, const Triangle &b) { return a.medium < b.medium; });
+}
+
 void Object::Draw() {
   glfwGetWindowSize(_window, &_width, &_height);
   _proportion = static_cast<float>(_width) / static_cast<float>(_height);
+  CalculateMedium();
   for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
     Triangle tri = *it;
     if (tri.mode == 1)
@@ -69,9 +87,12 @@ void Object::RunLoop() {
   while (!glfwWindowShouldClose(_window)) {
     glfwSetScrollCallback(_window, Object::scrollCallback);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDepthMask(GL_FALSE);
-    glEnable(GL_BLEND);
-    glEnable(GL_DEPTH_TEST);
+    if (_material[0].d < 1) {
+      glDepthMask(GL_FALSE);
+      glEnable(GL_BLEND);
+      glEnable(GL_DEPTH_TEST);
+    } else
+      glDepthMask(GL_TRUE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Draw();
     glfwSwapBuffers(_window);
