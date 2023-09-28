@@ -5,12 +5,22 @@
 
 ![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/5ee76b96-1c65-4977-b1eb-328928fe74a5)
 
+#### Added QWERT To change Colors
+#### Added 4 default materials
+#### Added Basic Texture, No UV mapped yet
+#### Added Centing in middle of the map
+
 ### Fifth Iteration
 
 ![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/162c9690-dd3e-4284-8f7e-f5ed88d0bc4a)
 
+#### Added Mouse Movment
+#### Added Correct layer order
+#### Correctly managin materials from the MTL file
+
 ### Forth Iteration
 ![ezgif com-video-to-gif (1)](https://github.com/kvebers/42-Scop/assets/49612380/bd7a4f4e-0e4b-475b-98fc-57d6307f0252)
+
 
 ### Third Iteration
 
