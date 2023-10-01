@@ -117,7 +117,7 @@ void Object::RenderObject() {
   MakeLight();
   InitGLFW();
   glfwMakeContextCurrent(_window);
-  SetupTexture("textures/ok.jpg");
+  SetupTexture("textures/riga.jpg");
   centerObject(_window);
   setupPoints();
   RunLoop();
