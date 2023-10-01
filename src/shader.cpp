@@ -115,3 +115,19 @@ void Object::Shader(Vector3 *point) {
   Vector3 result = Add(ambient, Add(diffuse, specular));
   glColor4f(result.x, result.y, result.z, _material[_currentMaterial].d);
 }
+
+void Object::setupPoints() {
+  for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
+    for (int i = 0; i < 4; i++) {
+      if (it->points[i] == nullptr)
+        break;
+      float normalizer = sqrt(it->points[i]->x * it->points[i]->x +
+                              it->points[i]->z * it->points[i]->z +
+                              it->points[i]->y * it->points[i]->y);
+      float normalizeXZ = it->points[i]->x * it->points[i]->x;
+      float normalizeYZ = it->points[i]->y * it->points[i]->y;
+      it->initialPoints[i].x = sqrt(normalizeXZ / normalizer) / 2.0f;
+      it->initialPoints[i].y = sqrt(normalizeYZ / normalizer) / 2.0f;
+    }
+  }
+}

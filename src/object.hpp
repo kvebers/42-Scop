@@ -99,6 +99,7 @@ private:
   static void colorMode(Object *objInstance);
   static void changeColor(float *color, int colorMode);
   void SetupTexture(std::string path);
+  void setupPoints();
 
 public:
   Object();
