@@ -1,6 +1,12 @@
 
 # 42-Scop
 
+### 8th Iteration
+
+![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/b8ea1f6d-9151-481b-9d1c-aaa74343aca3)
+
+<img width="600" alt="Screen Shot 2023-10-01 at 12 05 39 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/6d456599-6d93-4961-9ce6-90d951c5feb7">
+
 ### 7th Iteration
 
 ![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/a7a8727b-89fa-4c06-b5a1-4412db7aaba9)
