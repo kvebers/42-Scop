@@ -57,6 +57,10 @@ private:
   double _lastY;
   bool _isMoved;
   bool _isDragging;
+  // Render Object
+  int _vertecies;
+  int _edges;
+  int _faces;
   // Color and Material Mangment
   int _currentMaterial;
   float _colorMode;
@@ -85,7 +89,7 @@ private:
   void CalculateMedium();
 
   // Just cool function
-  void Shader(Vector3 *point);
+  void Shader(Vector3 *point, int modifier);
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,
                                   int mods);
   static void scrollCallback(GLFWwindow *window, double xoffset,
@@ -100,6 +104,10 @@ private:
   static void changeColor(float *color, int colorMode);
   void SetupTexture(std::string path);
   void setupPoints();
+  void DrawPoints();
+  void DrawEdges();
+  void DrawTriangleLine(Triangle &triangle);
+  void DrawRectangleLine(Triangle &rectangle);
 
 public:
   Object();

@@ -90,7 +90,7 @@ Vector3 Reflect(const Vector3 &incoming, const Vector3 &normal) {
   return Sub(incoming, Multiply(normal, Multiply(twos, dotProd)));
 }
 
-void Object::Shader(Vector3 *point) {
+void Object::Shader(Vector3 *point, int modifier) {
   Vector3 def;
   def.x = 0;
   def.y = 0;
@@ -101,19 +101,19 @@ void Object::Shader(Vector3 *point) {
   normal.z = 0;
   Vector3 lightDir = Normalize(Sub(_lightData, *point));
   Vector3 viewDir = Normalize(Sub(_viewPos, *point));
-  Vector3 ambient = Multiply(_material[_currentMaterial].Ka, _lightColor);
+  Vector3 ambient = Multiply(_material[modifier].Ka, _lightColor);
   Vector3 diffIntensity = Max(Dot(normal, lightDir), def);
-  Vector3 diffHelper = Multiply(_material[_currentMaterial].Kd, _lightColor);
+  Vector3 diffHelper = Multiply(_material[modifier].Kd, _lightColor);
   Vector3 diffuse = Multiply(diffHelper, diffIntensity);
   Vector3 reflectDir = Reflect(Sub(def, lightDir), normal);
   Vector3 specIntensity =
-      Pow(Max(Dot(viewDir, reflectDir), def), _material[_currentMaterial].Ns);
+      Pow(Max(Dot(viewDir, reflectDir), def), _material[modifier].Ns);
   Vector3 specular = Multiply(
-      Multiply(_material[_currentMaterial].Ks, _lightColor), specIntensity);
+      Multiply(_material[modifier].Ks, _lightColor), specIntensity);
 
   // Combine terms
   Vector3 result = Add(ambient, Add(diffuse, specular));
-  glColor4f(result.x, result.y, result.z, _material[_currentMaterial].d);
+  glColor4f(result.x, result.y, result.z, _material[modifier].d);
 }
 
 void Object::setupPoints() {
