@@ -9,7 +9,7 @@ SRC =	src/scop.cpp \
 		src/mouseUtils.cpp \
 		src/shader.cpp \
 		src/keyHook.cpp \
-		src/defaultMaterials.cpp
+		src/defaultMaterials.cpp 
 
 
 SRC_O = $(SRC:%.cpp=%.o)

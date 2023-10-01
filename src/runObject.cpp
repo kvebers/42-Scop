@@ -99,13 +99,24 @@ void Object::RunLoop() {
       glDepthMask(GL_FALSE);
       glEnable(GL_BLEND);
       glEnable(GL_DEPTH_TEST);
-    } else
+    } else {
       glDepthMask(GL_TRUE);
+      glDisable(GL_BLEND);
+      glDisable(GL_DEPTH_TEST);
+    }
     if (_renderTexture == 1) {
       glEnable(GL_TEXTURE_2D);
       glBindTexture(GL_TEXTURE_2D, _texture2D);
+    } else if (_renderTexture == 2) {
+      glUseProgram(_shaderProgram);
+      glEnable(GL_TEXTURE_2D);
+      glBindTexture(GL_TEXTURE_2D, _texture2D);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     } else {
       glDisable(GL_TEXTURE_2D);
+      glBindTexture(GL_TEXTURE_2D, 0);
+      glUseProgram(0);
     }
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     Draw();
@@ -135,6 +146,7 @@ void Object::RenderObject() {
   glfwInit();
   MakeLight();
   InitGLFW();
+  InitShaders();
   glfwMakeContextCurrent(_window);
   SetupTexture("textures/ok.jpg");
   centerObject(_window);

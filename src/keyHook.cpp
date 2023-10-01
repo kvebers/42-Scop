@@ -72,6 +72,9 @@ void Object::keyCallback(GLFWwindow *window, int key, int scancode, int action,
     case GLFW_KEY_6:
       objInstance->_renderTexture = 1;
       break;
+    case GLFW_KEY_7:
+      objInstance->_renderTexture = 2;
+      break;
     case GLFW_KEY_Q:
       changeColor(&objInstance->_material[objInstance->_currentMaterial].Ka.x,
                   objInstance->_colorMode);
