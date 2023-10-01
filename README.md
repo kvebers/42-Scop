@@ -1,6 +1,14 @@
 
 # 42-Scop
 
+### Just some cool images
+
+<img width="600" alt="Screen Shot 2023-10-01 at 1 44 19 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/f86c47a7-1bdd-4bb4-b8a0-e7ec1872f45a">
+
+<img width="600" alt="Screen Shot 2023-10-01 at 1 32 05 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/2e4ac52c-2272-4ad2-b84c-ecf0b1f0c69b">
+
+<img width="600" alt="Screen Shot 2023-10-01 at 1 31 35 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/c6dc0f9f-e31e-4a62-b869-7eaa5fd00761">
+
 ### 8th Iteration
 
 ![ezgif com-video-to-gif (2)](https://github.com/kvebers/42-Scop/assets/49612380/b8ea1f6d-9151-481b-9d1c-aaa74343aca3)
