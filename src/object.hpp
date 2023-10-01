@@ -25,6 +25,7 @@ struct Triangle {
   int mode;
   float medium;
   Vector3 *points[4];
+  Vector2 initialPoints[4];
 };
 
 class Object {
@@ -62,10 +63,6 @@ private:
   int _renderTexture;
   // Texture
   GLuint _texture2D;
-  // Other shaders
-  GLuint _fragmentShader;
-  GLuint _shaderProgram;
-
   // Parsing
   void ReadObj();
   void ProcessData();
@@ -89,8 +86,6 @@ private:
 
   // Just cool function
   void Shader(Vector3 *point);
-  // Fragment shader
-  void InitShaders();
   static void mouseButtonCallback(GLFWwindow *window, int button, int action,
                                   int mods);
   static void scrollCallback(GLFWwindow *window, double xoffset,

@@ -5,24 +5,36 @@ void Object::DrawRectangle(Triangle &rectangle) {
   Shader(rectangle.points[0]);
   if (_renderTexture == 1)
     glTexCoord2f(0.0f, 0.0f);
+  else if (_renderTexture == 2)
+    glTexCoord2f((rectangle.points[0]->x + 1) / 2,
+                 (rectangle.points[0]->y + 1) / 2);
   glVertex3f(rectangle.points[0]->x / _focalLen / _proportion,
              rectangle.points[0]->y / _focalLen,
              rectangle.points[0]->z / _focalLen);
   Shader(rectangle.points[1]);
   if (_renderTexture == 1)
     glTexCoord2f(1.0f, 0.0f);
+  else if (_renderTexture == 2)
+    glTexCoord2f((rectangle.points[1]->x + 1) / 2,
+                 (rectangle.points[1]->y + 1) / 2);
   glVertex3f(rectangle.points[1]->x / _focalLen / _proportion,
              rectangle.points[1]->y / _focalLen,
              rectangle.points[1]->z / _focalLen);
   Shader(rectangle.points[2]);
   if (_renderTexture == 1)
     glTexCoord2f(1.0f, 1.0f);
+  else if (_renderTexture == 2)
+    glTexCoord2f((rectangle.points[2]->x + 1) / 2,
+                 (rectangle.points[2]->y + 1) / 2);
   glVertex3f(rectangle.points[2]->x / _focalLen / _proportion,
              rectangle.points[2]->y / _focalLen,
              rectangle.points[2]->z / _focalLen);
   Shader(rectangle.points[3]);
   if (_renderTexture == 1)
     glTexCoord2f(0.0f, 1.0f);
+  else if (_renderTexture == 2)
+    glTexCoord2f((rectangle.points[3]->x + 1) / 2,
+                 (rectangle.points[3]->y + 1) / 2);
   glVertex3f(rectangle.points[3]->x / _focalLen / _proportion,
              rectangle.points[3]->y / _focalLen,
              rectangle.points[3]->z / _focalLen);
@@ -34,18 +46,27 @@ void Object::DrawTriangle(Triangle &triangle) {
   Shader(triangle.points[0]);
   if (_renderTexture == 1)
     glTexCoord2f(0.0f, 0.0f);
+  else if (_renderTexture == 2)
+    glTexCoord2f((triangle.points[0]->x + 1) / 2,
+                 (triangle.points[0]->y + 1) / 2);
   glVertex3f(triangle.points[0]->x / _focalLen / _proportion,
              triangle.points[0]->y / _focalLen,
              triangle.points[0]->z / _focalLen);
   Shader(triangle.points[1]);
   if (_renderTexture == 1)
     glTexCoord2f(0.0f, 1.0f);
+  else if (_renderTexture == 2)
+    glTexCoord2f((triangle.points[1]->x + 1) / 2,
+                 (triangle.points[1]->y + 1) / 2);
   glVertex3f(triangle.points[1]->x / _focalLen / _proportion,
              triangle.points[1]->y / _focalLen,
              triangle.points[1]->z / _focalLen);
   Shader(triangle.points[2]);
   if (_renderTexture == 1)
     glTexCoord2f(0.5f, 0.5f);
+  else if (_renderTexture == 2)
+    glTexCoord2f((triangle.points[2]->x + 1) / 2,
+                 (triangle.points[2]->y + 1) / 2);
   glVertex3f(triangle.points[2]->x / _focalLen / _proportion,
              triangle.points[2]->y / _focalLen,
              triangle.points[2]->z / _focalLen);
@@ -70,8 +91,7 @@ void Object::InitGLFW() {
   if (!_window) {
     std::cerr << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
-    perror("Error");
-    return;
+    exit(127);
   }
   glfwSetWindowUserPointer(_window, this);
   glfwSetMouseButtonCallback(_window, mouseButtonCallback);
@@ -108,11 +128,8 @@ void Object::RunLoop() {
       glEnable(GL_TEXTURE_2D);
       glBindTexture(GL_TEXTURE_2D, _texture2D);
     } else if (_renderTexture == 2) {
-      glUseProgram(_shaderProgram);
       glEnable(GL_TEXTURE_2D);
       glBindTexture(GL_TEXTURE_2D, _texture2D);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     } else {
       glDisable(GL_TEXTURE_2D);
       glBindTexture(GL_TEXTURE_2D, 0);
@@ -146,7 +163,6 @@ void Object::RenderObject() {
   glfwInit();
   MakeLight();
   InitGLFW();
-  InitShaders();
   glfwMakeContextCurrent(_window);
   SetupTexture("textures/ok.jpg");
   centerObject(_window);
