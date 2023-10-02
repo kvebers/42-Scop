@@ -39,10 +39,10 @@ void Object::CalculateMedium() {
 }
 
 void Object::DrawPoints() {
-  glPointSize(8.0f);
+  glPointSize(5.0f);
   for (auto it = _pointCordData.begin(); it != _pointCordData.end(); it++) {
     glBegin(GL_POINTS);
-    Shader(&(*it), 5);
+    Shader(&(*it), _currentMaterial);
     glVertex3f(it->x / _focalLen / _proportion, it->y / _focalLen,
                it->z / _focalLen);
     glEnd();
