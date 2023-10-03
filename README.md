@@ -2,6 +2,7 @@
 # 42-Scop
 
 ### Just some cool images
+<img width="1224" alt="Screen Shot 2023-10-02 at 9 12 12 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/211c183c-5404-4990-9a19-6e90bce31dc3">
 
 <img width="600" alt="Screen Shot 2023-10-01 at 1 44 19 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/f86c47a7-1bdd-4bb4-b8a0-e7ec1872f45a">
 
