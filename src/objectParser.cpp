@@ -1,6 +1,6 @@
 #include "object.hpp"
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "stb_image.hpp"
 
 void Object::ReadObj() {
   std::ifstream obj(_obj);
