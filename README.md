@@ -1,6 +1,14 @@
 
 # 42-Scop
 
+### 8th Iteration
+
+Cylindrical UV mapping attempt
+
+<img width="1028" alt="Screen Shot 2023-10-06 at 12 59 55 AM" src="https://github.com/kvebers/42-Scop/assets/49612380/ab2fd6a3-f7f9-4d51-a443-a759071a3135">
+<img width="1968" alt="Screen Shot 2023-10-06 at 12 58 09 AM" src="https://github.com/kvebers/42-Scop/assets/49612380/e116652a-07c7-4ca0-8e48-d27db7dba711">
+
+
 ### Just some cool images
 <img width="1224" alt="Screen Shot 2023-10-02 at 9 12 12 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/211c183c-5404-4990-9a19-6e90bce31dc3">
 
