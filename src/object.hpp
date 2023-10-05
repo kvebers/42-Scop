@@ -26,6 +26,7 @@ struct Triangle {
   float medium;
   Vector3 *points[4];
   Vector2 initialPoints[4];
+  Vector2 UV[4];
 };
 
 class Object {
@@ -108,6 +109,7 @@ private:
   void DrawEdges();
   void DrawTriangleLine(Triangle &triangle);
   void DrawRectangleLine(Triangle &rectangle);
+  void SelectTexture(Triangle &triangle, int i, int mode);
 
 public:
   Object();

@@ -51,40 +51,30 @@ void Object::keyCallback(GLFWwindow *window, int key, int scancode, int action,
     switch (key) {
     case GLFW_KEY_1:
       objInstance->_currentMaterial = 0;
-      objInstance->_renderTexture = 0;
       break;
     case GLFW_KEY_2:
       objInstance->_currentMaterial = 1;
-      objInstance->_renderTexture = 0;
       break;
     case GLFW_KEY_3:
       objInstance->_currentMaterial = 2;
-      objInstance->_renderTexture = 0;
       break;
     case GLFW_KEY_4:
       objInstance->_currentMaterial = 3;
-      objInstance->_renderTexture = 0;
       break;
     case GLFW_KEY_5:
       objInstance->_currentMaterial = 4;
-      objInstance->_renderTexture = 0;
       break;
     case GLFW_KEY_6:
-      objInstance->_renderTexture = 1;
+      objInstance->_renderTexture += 1;
+      objInstance->_renderTexture = objInstance->_renderTexture % 5;
       break;
     case GLFW_KEY_7:
-      objInstance->_renderTexture = 2;
-      break;
-    case GLFW_KEY_8:
-      objInstance->_renderTexture = 3;
-      break;
-    case GLFW_KEY_9:
       objInstance->_faces++;
       break;
-    case GLFW_KEY_0:
+    case GLFW_KEY_8:
       objInstance->_vertecies++;
       break;
-    case GLFW_KEY_MINUS:
+    case GLFW_KEY_9:
       objInstance->_edges++;
       break;
     case GLFW_KEY_Q:
