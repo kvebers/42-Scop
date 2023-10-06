@@ -13,6 +13,7 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <map>
 #include <ostream>
 #include <sstream>
 #include <string>

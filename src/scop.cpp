@@ -23,6 +23,7 @@ int check_parsing(char *argv, std::string comp) {
 }
 
 int main(int argc, char **argv) {
+  
   if (argc != 3) {
     std::cerr << "Not enought arguments " << std::endl;
     return 0;

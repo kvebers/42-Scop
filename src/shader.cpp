@@ -128,12 +128,18 @@ void Object::setupPoints() {
       float normalizeYZ = it->points[i]->y * it->points[i]->y;
       it->initialPoints[i].x = sqrt(normalizeXZ / normalizer) / 2.0f;
       it->initialPoints[i].y = sqrt(normalizeYZ / normalizer) / 2.0f;
-      float theta = atan2(it->points[i]->z, it->points[i]->x);
-      it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
-      it->UV[i].y = (it->points[i]->y + 1.0f) / 2.0f;
+      if (sqrt(it->points[i]->y * it->points[i]->y) * 1.5 <
+          sqrt(it->points[i]->z * it->points[i]->z)) {
+        float theta = atan2(it->points[i]->z, it->points[i]->x);
+        it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
+        it->UV[i].y = (it->points[i]->y + 1.0f) / 2.0f;
+      } else {
+        float theta = atan2(it->points[i]->y, it->points[i]->x);
+        it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
+        it->UV[i].y = (it->points[i]->z + 1.0f) / 2.0f;
+      }
     }
-
-    // it->UV[i].x = theta / (2.0f * M_PI);
-    // it->UV[i].y = phi / M_PI;
+  }
+  for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
   }
 }
