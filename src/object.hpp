@@ -27,6 +27,7 @@ struct Triangle {
   Vector3 *points[4];
   Vector2 initialPoints[4];
   Vector2 UV[4];
+  Vector2 UV_Proper[4];
 };
 
 class Object {

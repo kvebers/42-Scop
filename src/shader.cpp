@@ -128,18 +128,12 @@ void Object::setupPoints() {
       float normalizeYZ = it->points[i]->y * it->points[i]->y;
       it->initialPoints[i].x = sqrt(normalizeXZ / normalizer) / 2.0f;
       it->initialPoints[i].y = sqrt(normalizeYZ / normalizer) / 2.0f;
-      float x = it->points[i]->x;
-      float y = it->points[i]->y;
-      float z = it->points[i]->z;
-      // float z_weight = 1.1f; // Example weight based on magnitude of z.
-      // float theta = atan2(y, x) * z_weight;
-      // float phi = acos(z) * z_weight;
-      float theta = atan2(y, x);
-      it->UV[i].x = (theta + M_PI) / (2.0f * M_PI); // Convert theta to [0, 1]
-      it->UV[i].y = (z + 1.0f) / 2.0f; // Assuming z is in the range [-1, 1]
-
-      // it->UV[i].x = theta / (2.0f * M_PI);
-      // it->UV[i].y = phi / M_PI;
+      float theta = atan2(it->points[i]->z, it->points[i]->x);
+      it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
+      it->UV[i].y = (it->points[i]->y + 1.0f) / 2.0f;
     }
+
+    // it->UV[i].x = theta / (2.0f * M_PI);
+    // it->UV[i].y = phi / M_PI;
   }
 }
