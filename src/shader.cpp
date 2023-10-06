@@ -128,7 +128,7 @@ void Object::setupPoints() {
       float normalizeYZ = it->points[i]->y * it->points[i]->y;
       it->initialPoints[i].x = sqrt(normalizeXZ / normalizer) / 2.0f;
       it->initialPoints[i].y = sqrt(normalizeYZ / normalizer) / 2.0f;
-      if (sqrt(it->points[i]->y * it->points[i]->y) * 1.5 <
+      if (sqrt(it->points[i]->y * it->points[i]->y) <
           sqrt(it->points[i]->z * it->points[i]->z)) {
         float theta = atan2(it->points[i]->z, it->points[i]->x);
         it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
