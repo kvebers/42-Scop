@@ -24,9 +24,11 @@ struct Triangle {
   int mode;
   float medium;
   Vector3 *points[4];
+  int locations[4];
   Vector2 initialPoints[4];
   Vector2 UV[4];
   Vector2 UV_Proper[4];
+  int smallestLocation;
 };
 
 class Object {
