@@ -114,6 +114,7 @@ private:
   void DrawRectangleLine(Triangle &rectangle);
   void SelectTexture(Triangle &triangle, int i, int mode);
 
+  void resize();
   void unwrap();
 
 public:

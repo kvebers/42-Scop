@@ -93,7 +93,7 @@ void Object::RunLoop() {
 }
 
 void Object::MakeLight() {
-  _focalLen = 5.0f;
+  _focalLen = 1.0f;
   _lightData.x = 1.0f;
   _lightData.y = 1.0f;
   _lightData.z = 1.0f;
@@ -111,6 +111,43 @@ void Object::MakeLight() {
   _renderTexture = 0;
 }
 
+void Object::resize() {
+  Vector3 maxPoint = _pointCordData[0];
+  Vector3 minPoint = _pointCordData[0];
+
+  for (auto point = _pointCordData.begin(); point != _pointCordData.end();
+       point++) {
+    if (point->x > maxPoint.x)
+      maxPoint.x = point->x;
+    if (point->y > maxPoint.y)
+      maxPoint.y = point->y;
+    if (point->z > maxPoint.z)
+      maxPoint.z = point->z;
+    if (point->x < minPoint.x)
+      minPoint.x = point->x;
+    if (point->y < minPoint.y)
+      minPoint.y = point->y;
+    if (point->z < minPoint.z)
+      minPoint.z = point->z;
+  }
+
+  float deltaPointX = std::abs(maxPoint.x - minPoint.x);
+  float deltaPointY = std::abs(maxPoint.y - minPoint.y);
+  float deltaPointZ = std::abs(maxPoint.z - minPoint.z);
+  float coef = deltaPointX;
+  if (coef < deltaPointY)
+    coef = deltaPointY;
+  if (coef < deltaPointZ)
+    coef = deltaPointZ;
+  coef /= 2;
+  for (auto point = _pointCordData.begin(); point != _pointCordData.end();
+       point++) {
+    point->x /= coef;
+    point->y /= coef;
+    point->z /= coef;
+  }
+}
+
 void Object::RenderObject() {
   ProcessData();
   glfwInit();
@@ -118,6 +155,7 @@ void Object::RenderObject() {
   InitGLFW();
   glfwMakeContextCurrent(_window);
   SetupTexture("textures/ok.jpg");
+  resize();
   centerObject(_window);
   setupPoints();
   RunLoop();

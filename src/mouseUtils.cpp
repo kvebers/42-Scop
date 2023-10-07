@@ -5,7 +5,7 @@ void Object::scrollCallback(GLFWwindow *window, double xoffset,
   Object *objInstance = static_cast<Object *>(glfwGetWindowUserPointer(window));
   (void)xoffset;
   if (objInstance) {
-    if (objInstance->_focalLen - yoffset > 2 &&
+    if (objInstance->_focalLen - yoffset >= 1 &&
         objInstance->_focalLen - yoffset < 200)
       objInstance->_focalLen -= yoffset;
   }

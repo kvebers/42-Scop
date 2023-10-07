@@ -117,12 +117,17 @@ void Object::SetupRender() {
       temp.points[0] = &_pointCordData[std::stoi(first) - 1];
       temp.points[1] = &_pointCordData[std::stoi(sec) - 1];
       temp.points[2] = &_pointCordData[std::stoi(third) - 1];
+      temp.locations[0] = std::stoi(first) - 1;
+      temp.locations[1] = std::stoi(sec) - 1;
+      temp.locations[2] = std::stoi(third) - 1;
       if (!(iss >> forth)) {
         temp.points[3] = nullptr;
+        temp.locations[3] = -1;
         temp.mode = 1;
         forth.clear();
       } else {
         temp.mode = 0;
+        temp.locations[3] = std::stoi(forth) - 1;
         temp.points[3] = &_pointCordData[std::stoi(forth) - 1];
       }
       _drawData.push_back(temp);

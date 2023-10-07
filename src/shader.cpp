@@ -116,10 +116,6 @@ void Object::Shader(Vector3 *point, int modifier) {
   glColor4f(result.x, result.y, result.z, _material[modifier].d);
 }
 
-
-
-
-
 void Object::setupPoints() {
   for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
     for (int i = 0; i < 4; i++) {
@@ -132,12 +128,16 @@ void Object::setupPoints() {
       float normalizeYZ = it->points[i]->y * it->points[i]->y;
       it->initialPoints[i].x = sqrt(normalizeXZ / normalizer) / 2.0f;
       it->initialPoints[i].y = sqrt(normalizeYZ / normalizer) / 2.0f;
-      float theta = atan2(it->points[i]->z, it->points[i]->x);
-      float phi = atan2(sqrt(it->points[i]->x * it->points[i]->x +
-                             it->points[i]->z * it->points[i]->x),
-                        it->points[i]->y);
-      it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
-      it->UV[i].y = (phi + M_PI / 2.0f) / M_PI;
+      if (sqrt(it->points[i]->y * it->points[i]->y) <
+          sqrt(it->points[i]->z * it->points[i]->z)) {
+        float theta = atan2(it->points[i]->z, it->points[i]->x);
+        it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
+        it->UV[i].y = (it->points[i]->y + 1.0f) / 2.0f;
+      } else {
+        float theta = atan2(it->points[i]->y, it->points[i]->x);
+        it->UV[i].x = (theta + M_PI) / (2.0f * M_PI);
+        it->UV[i].y = (it->points[i]->z + 1.0f) / 2.0f;
+      }
     }
   }
   unwrap();
