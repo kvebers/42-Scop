@@ -66,7 +66,7 @@ void Object::keyCallback(GLFWwindow *window, int key, int scancode, int action,
       break;
     case GLFW_KEY_6:
       objInstance->_renderTexture += 1;
-      objInstance->_renderTexture = objInstance->_renderTexture % 5;
+      objInstance->_renderTexture = objInstance->_renderTexture % 6;
       break;
     case GLFW_KEY_7:
       objInstance->_faces++;

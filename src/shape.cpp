@@ -20,6 +20,8 @@ void Object::SelectTexture(Triangle &triangle, int i, int mode) {
     glTexCoord2f(triangle.initialPoints[i].x, triangle.initialPoints[i].y);
   else if (_renderTexture == 4)
     glTexCoord2f(triangle.UV[i].x, triangle.UV[i].y);
+  else if (_renderTexture == 5)
+    glTexCoord2f(triangle.UV_Proper[i].x, triangle.UV_Proper[i].y);
 }
 
 void Object::DrawRectangle(Triangle &rectangle) {

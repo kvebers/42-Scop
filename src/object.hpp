@@ -4,10 +4,26 @@
 
 struct Vector2 {
   float x, y;
+  Vector2 &operator=(const Vector2 &other) {
+    x = other.x;
+    y = other.y;
+    return *this;
+  }
 };
 
 struct Vector3 {
   float x, y, z;
+  const float EPSILON = 1e-5f;
+  bool operator==(const Vector3 &other) const {
+    return (std::abs(x - other.x) < EPSILON &&
+            std::abs(y - other.y) < EPSILON && std::abs(z - other.z) < EPSILON);
+  }
+  Vector3 &operator=(const Vector3 &other) {
+    x = other.x;
+    y = other.y;
+    z = other.z;
+    return *this;
+  }
 };
 
 struct Material {
@@ -28,7 +44,21 @@ struct Triangle {
   Vector2 initialPoints[4];
   Vector2 UV[4];
   Vector2 UV_Proper[4];
-  int smallestLocation;
+};
+
+struct Edge {
+  int startPoint;
+  int endPoint;
+  Vector3 start;
+  Vector3 end;
+  float lenX;
+  float lenY;
+  float angle;
+
+  bool operator==(const Edge &other) const {
+    return (start == other.start && end == other.end) ||
+           (start == other.end && end == other.start);
+  }
 };
 
 class Object {

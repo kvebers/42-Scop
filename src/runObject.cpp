@@ -94,9 +94,9 @@ void Object::RunLoop() {
 
 void Object::MakeLight() {
   _focalLen = 1.0f;
-  _lightData.x = 1.0f;
-  _lightData.y = 1.0f;
-  _lightData.z = 1.0f;
+  _lightData.x = 5.0f;
+  _lightData.y = -2.0f;
+  _lightData.z = 3.0f;
   _lightColor.x = 1.0f;
   _lightColor.y = 1.0f;
   _lightColor.z = 1.0f;
