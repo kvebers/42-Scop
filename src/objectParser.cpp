@@ -138,6 +138,7 @@ void Object::SetupTexture(std::string path) {
   int height;
   int channels;
   GLint maxTextureSize;
+  path = _texture;
   unsigned char *data = stbi_load(path.c_str(), &width, &height, &channels, 0);
   if (data) {
     glGenTextures(1, &_texture2D);

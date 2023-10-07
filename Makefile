@@ -10,7 +10,8 @@ SRC =	src/scop.cpp \
 		src/shader.cpp \
 		src/keyHook.cpp \
 		src/defaultMaterials.cpp \
-		src/shape.cpp
+		src/shape.cpp \
+		src/uvUnwrapping.cpp
 
 
 SRC_O = $(SRC:%.cpp=%.o)

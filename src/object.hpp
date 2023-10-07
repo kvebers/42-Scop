@@ -70,6 +70,7 @@ private:
   int _renderTexture;
   // Texture
   GLuint _texture2D;
+  std::string _texture;
   // Parsing
   void ReadObj();
   void ProcessData();
@@ -113,9 +114,11 @@ private:
   void DrawRectangleLine(Triangle &rectangle);
   void SelectTexture(Triangle &triangle, int i, int mode);
 
+  void unwrap();
+
 public:
   Object();
-  Object(std::string &object, std::string &mtl);
+  Object(std::string &object, std::string &mtl, std::string &texture);
   ~Object();
   void RenderObject();
 };
