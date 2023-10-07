@@ -22,18 +22,8 @@ void Object::unwrap() {
       float dx = edge.end.x - edge.start.x;
       float dy = edge.end.y - edge.start.y;
       float dz = edge.end.z - edge.start.z;
-      // float theta_xy = atan2(dy, dx);
-      float theta_yz = atan2(dz, dy);
-      float theta_zx = atan2(dx, dz);
-      edge.lenX = dx + dz * sin(theta_zx);
-      edge.lenY = dy + dz * cos(theta_yz);
-      // edge.lenX = edge.end.x - edge.start.x +
-      //             sin(edge.angle) * (edge.end.z - edge.start.z);
-      // edge.lenY = edge.end.y -
-      //             edge.start.y * cos(edge.angle) * (edge.end.z -
-      //             edge.start.z);
-      // +
-      //             cos(edge.angle) * (edge.end.z - edge.start.z);
+      edge.lenX = sqrt(dx * dx + dz * dz);
+      edge.lenY = dy;
       if (std::find(edges.begin(), edges.end(), edge) == edges.end()) {
         edges.push_back(edge);
       }
@@ -49,13 +39,24 @@ void Object::unwrap() {
             });
 
   std::map<int, Vector2> translated;
+  if (!sortedEdges.empty()) {
+    Vector2 vec;
+    vec.x = 0;
+    vec.y = 0;
+    translated[sortedEdges.front().startPoint] = vec;
+    vec.x += sortedEdges.front().lenX;
+    vec.y += sortedEdges.front().lenX;
+    translated[sortedEdges.front().endPoint] = vec;
+    sortedEdges.erase(sortedEdges.begin());
+  }
   int len = sortedEdges.size();
   int tempLen = len + 1;
+  std::cout << len << std::endl;
   while (tempLen != len) {
     tempLen = len;
     for (auto it = sortedEdges.begin(); it != sortedEdges.end();) {
-
       auto found = translated.find(it->startPoint);
+      auto found1 = translated.find(it->endPoint);
       Vector2 val;
       if (found != translated.end()) {
         val = found->second;
@@ -65,7 +66,6 @@ void Object::unwrap() {
         it = sortedEdges.erase(it);
         continue;
       }
-      auto found1 = translated.find(it->startPoint);
       if (found1 != translated.end()) {
         val = found1->second;
         val.x += it->lenX;
@@ -75,12 +75,6 @@ void Object::unwrap() {
         continue;
       }
       it++;
-      val.x = 0;
-      val.y = 0;
-      translated[it->startPoint] = val;
-      val.x += it->lenX;
-      val.y += it->lenY;
-      translated[it->endPoint] = val;
     }
     len = sortedEdges.size();
   }
@@ -88,10 +82,7 @@ void Object::unwrap() {
   for (auto it = translated.begin(); it != translated.end(); it++) {
     it->second.x = (it->second.x + 1) / 2;
     it->second.y = (it->second.y + 1) / 2;
-    std::cout << it->first << " " << it->second.x << " " << it->second.y
-              << std::endl;
   }
-  int cnt = 0;
   for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
     int points = 0;
     if (it->mode == 1)
@@ -101,8 +92,6 @@ void Object::unwrap() {
     for (int i = 0; i < points; i++) {
       auto find = translated.find(it->locations[i]);
       it->UV_Proper[i] = find->second;
-      cnt++;
     }
   }
-  std::cout << cnt << std::endl;
 }
