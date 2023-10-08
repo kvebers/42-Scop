@@ -22,7 +22,7 @@ void Object::unwrap() {
       float dx = edge.end.x - edge.start.x;
       float dy = edge.end.y - edge.start.y;
       float dz = edge.end.z - edge.start.z;
-      if (dx < 0)
+      if (dx + dz < 0)
         edge.lenX = -sqrt(dx * dx + dz * dz);
       else
         edge.lenX = sqrt(dx * dx + dz * dz);
@@ -45,7 +45,7 @@ void Object::unwrap() {
   //           });
 
   std::map<int, Vector2> translated;
-  if (!sortedEdges.empty()) {
+  while (!sortedEdges.empty()) {
     Vector2 vec;
     vec.x = 0;
     vec.y = 0;
@@ -54,37 +54,35 @@ void Object::unwrap() {
     vec.y += sortedEdges.front().lenX;
     translated[sortedEdges.front().endPoint] = vec;
     sortedEdges.erase(sortedEdges.begin());
-  }
-  int len = sortedEdges.size();
-  int tempLen = len + 1;
-  while (tempLen != len) {
-    tempLen = len;
-    for (auto it = sortedEdges.begin(); it != sortedEdges.end();) {
-      auto found = translated.find(it->startPoint);
-      auto found1 = translated.find(it->endPoint);
-      Vector2 val;
-      if (found != translated.end()) {
-        val = found->second;
-        val.x += it->lenX;
-        val.y += it->lenY;
-        translated[it->endPoint] = val;
-        it = sortedEdges.erase(it);
-        continue;
+    int len = sortedEdges.size();
+    int tempLen = len + 1;
+    while (tempLen != len) {
+      tempLen = len;
+      for (auto it = sortedEdges.begin(); it != sortedEdges.end();) {
+        auto found = translated.find(it->startPoint);
+        auto found1 = translated.find(it->endPoint);
+        Vector2 val;
+        if (found != translated.end()) {
+          val = found->second;
+          val.x += it->lenX;
+          val.y += it->lenY;
+          translated[it->endPoint] = val;
+          it = sortedEdges.erase(it);
+          continue;
+        }
+        if (found1 != translated.end()) {
+          val = found1->second;
+          val.x += it->lenX;
+          val.y += it->lenY;
+          translated[it->startPoint] = val;
+          it = sortedEdges.erase(it);
+          continue;
+        }
+        it++;
       }
-      if (found1 != translated.end()) {
-        val = found1->second;
-        val.x += it->lenX;
-        val.y += it->lenY;
-        translated[it->startPoint] = val;
-        it = sortedEdges.erase(it);
-        std::cout << " I was here" << std::endl;
-        continue;
-      }
-      it++;
+      len = sortedEdges.size();
     }
-    len = sortedEdges.size();
   }
-
   for (auto it = translated.begin(); it != translated.end(); it++) {
     it->second.x = (it->second.x + 1) / 2;
     it->second.y = (it->second.y + 1) / 2;
