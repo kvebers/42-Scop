@@ -56,7 +56,7 @@ void Object::unwrap() {
     tempLen = len;
     for (auto it = sortedEdges.begin(); it != sortedEdges.end();) {
       auto found = translated.find(it->startPoint);
-      auto found1 = translated.find(it->endPoint);
+      // auto found1 = translated.find(it->endPoint);
       Vector2 val;
       if (found != translated.end()) {
         val = found->second;
