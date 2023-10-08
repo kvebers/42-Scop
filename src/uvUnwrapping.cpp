@@ -2,9 +2,28 @@
 #include <set>
 #include <vector>
 
-void Object::unwrap() {
-  // Indexing Triangle Texturing Order
+float calculateDelta(std::map<int, Vector2> &translated) {
+  float maxX = translated.begin()->second.x;
+  float minX = translated.begin()->second.x;
+  float maxY = translated.begin()->second.y;
+  float minY = translated.begin()->second.y;
+  for (auto it = translated.begin(); it != translated.end(); it++) {
+    if (maxX < it->second.x)
+      maxX = it->second.x;
+    if (minX > it->second.x)
+      minX = it->second.x;
+    if (maxY < it->second.y)
+      maxX = it->second.x;
+    if (minY > it->second.y)
+      minY = it->second.y;
+  }
+  float delta = maxX - minX;
+  if (delta < maxY - minY)
+    delta = maxY - minY;
+  return delta;
+}
 
+std::vector<Edge> Object::CreateEdges() {
   std::vector<Edge> edges;
   for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
     int points = 0;
@@ -18,40 +37,26 @@ void Object::unwrap() {
       edge.end = *(it->points[(i + 1) % points]);
       edge.startPoint = it->locations[i];
       edge.endPoint = it->locations[(i + 1) % points];
-      edge.angle = atan2(edge.end.x - edge.start.x, edge.end.z - edge.start.z);
-      float dx = edge.end.x - edge.start.x;
-      float dy = edge.end.y - edge.start.y;
-      float dz = edge.end.z - edge.start.z;
-      if (dx + dz < 0)
-        edge.lenX = -sqrt(dx * dx + dz * dz);
-      else
-        edge.lenX = sqrt(dx * dx + dz * dz);
-      if (dy < 0)
-        edge.lenY = -sqrt(dy * dy);
-      else
-        edge.lenY = sqrt(dy * dy);
       if (std::find(edges.begin(), edges.end(), edge) == edges.end()) {
         edges.push_back(edge);
       }
     }
   }
+  return edges;
+}
 
-  std::vector<Edge> sortedEdges = edges; // Copy the edges into sortedEdges
+void Object::unwrap() {
 
-  // std::sort(sortedEdges.begin(), sortedEdges.end(),
-  //           [](const Edge &a, const Edge &b) {
-  //             return std::min(a.startPoint, a.endPoint) <
-  //                    std::min(b.startPoint, b.endPoint);
-  //           });
-
-  std::map<int, Vector2> translated;
+  std::vector<Edge> sortedEdges = CreateEdges();
+  std::vector<std::map<int, Vector2>> objects;
   while (!sortedEdges.empty()) {
+    std::map<int, Vector2> translated;
     Vector2 vec;
     vec.x = 0;
     vec.y = 0;
     translated[sortedEdges.front().startPoint] = vec;
-    vec.x += sortedEdges.front().lenX;
-    vec.y += sortedEdges.front().lenX;
+    vec.x = 0;
+    vec.y = 0;
     translated[sortedEdges.front().endPoint] = vec;
     sortedEdges.erase(sortedEdges.begin());
     int len = sortedEdges.size();
@@ -64,16 +69,16 @@ void Object::unwrap() {
         Vector2 val;
         if (found != translated.end()) {
           val = found->second;
-          val.x += it->lenX;
-          val.y += it->lenY;
+          val.x = 0;
+          val.y = 0;
           translated[it->endPoint] = val;
           it = sortedEdges.erase(it);
           continue;
         }
         if (found1 != translated.end()) {
           val = found1->second;
-          val.x += it->lenX;
-          val.y += it->lenY;
+          val.x = 0;
+          val.y = 0;
           translated[it->startPoint] = val;
           it = sortedEdges.erase(it);
           continue;
@@ -82,20 +87,25 @@ void Object::unwrap() {
       }
       len = sortedEdges.size();
     }
+    objects.push_back(translated);
   }
-  for (auto it = translated.begin(); it != translated.end(); it++) {
-    it->second.x = (it->second.x + 1) / 2;
-    it->second.y = (it->second.y + 1) / 2;
-  }
-  for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
-    int points = 0;
-    if (it->mode == 1)
-      points = 3;
-    else
-      points = 4;
-    for (int i = 0; i < points; i++) {
-      auto find = translated.find(it->locations[i]);
-      it->UV_Proper[i] = find->second;
+  for (auto translated = objects.begin(); translated != objects.end();
+       translated++) {
+    float delta = calculateDelta(*translated);
+    for (auto it = translated->begin(); it != translated->end(); it++) {
+      it->second.x = (it->second.x + delta) / (delta * 2);
+      it->second.y = (it->second.y + delta) / (delta * 2);
+    }
+    for (auto it = _drawData.begin(); it != _drawData.end(); it++) {
+      int points = 0;
+      if (it->mode == 1)
+        points = 3;
+      else
+        points = 4;
+      for (int i = 0; i < points; i++) {
+        auto find = translated->find(it->locations[i]);
+        it->UV_Proper[i] = find->second;
+      }
     }
   }
 }

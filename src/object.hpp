@@ -51,9 +51,6 @@ struct Edge {
   int endPoint;
   Vector3 start;
   Vector3 end;
-  float lenX;
-  float lenY;
-  float angle;
 
   bool operator==(const Edge &other) const {
     return (start == other.start && end == other.end) ||
@@ -146,6 +143,7 @@ private:
 
   void resize();
   void unwrap();
+  std::vector<Edge> CreateEdges();
 
 public:
   Object();
