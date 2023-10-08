@@ -22,8 +22,14 @@ void Object::unwrap() {
       float dx = edge.end.x - edge.start.x;
       float dy = edge.end.y - edge.start.y;
       float dz = edge.end.z - edge.start.z;
-      edge.lenX = sqrt(dx * dx + dz * dz);
-      edge.lenY = dy;
+      if (dx < 0)
+        edge.lenX = -sqrt(dx * dx + dz * dz);
+      else
+        edge.lenX = sqrt(dx * dx + dz * dz);
+      if (dy < 0)
+        edge.lenY = -sqrt(dy * dy);
+      else
+        edge.lenY = sqrt(dy * dy);
       if (std::find(edges.begin(), edges.end(), edge) == edges.end()) {
         edges.push_back(edge);
       }
@@ -32,11 +38,11 @@ void Object::unwrap() {
 
   std::vector<Edge> sortedEdges = edges; // Copy the edges into sortedEdges
 
-  std::sort(sortedEdges.begin(), sortedEdges.end(),
-            [](const Edge &a, const Edge &b) {
-              return std::min(a.startPoint, a.endPoint) <
-                     std::min(b.startPoint, b.endPoint);
-            });
+  // std::sort(sortedEdges.begin(), sortedEdges.end(),
+  //           [](const Edge &a, const Edge &b) {
+  //             return std::min(a.startPoint, a.endPoint) <
+  //                    std::min(b.startPoint, b.endPoint);
+  //           });
 
   std::map<int, Vector2> translated;
   if (!sortedEdges.empty()) {
@@ -51,12 +57,11 @@ void Object::unwrap() {
   }
   int len = sortedEdges.size();
   int tempLen = len + 1;
-  std::cout << len << std::endl;
   while (tempLen != len) {
     tempLen = len;
     for (auto it = sortedEdges.begin(); it != sortedEdges.end();) {
       auto found = translated.find(it->startPoint);
-      // auto found1 = translated.find(it->endPoint);
+      auto found1 = translated.find(it->endPoint);
       Vector2 val;
       if (found != translated.end()) {
         val = found->second;
@@ -72,6 +77,7 @@ void Object::unwrap() {
         val.y += it->lenY;
         translated[it->startPoint] = val;
         it = sortedEdges.erase(it);
+        std::cout << " I was here" << std::endl;
         continue;
       }
       it++;
