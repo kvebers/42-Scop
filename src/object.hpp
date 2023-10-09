@@ -51,7 +51,8 @@ struct Edge {
   int endPoint;
   Vector3 start;
   Vector3 end;
-
+  float lenX;
+  float lenY;
   bool operator==(const Edge &other) const {
     return (start == other.start && end == other.end) ||
            (start == other.end && end == other.start);
