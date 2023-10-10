@@ -1,6 +1,6 @@
 
 # 42-Scop
-### 10th Iteration work on UV Unwrapping, spliting objects, sadly works only for 1 quadrant for now
+### 10th 7 Diffrent UV map modes
 
 ![Blank 15 Grids Collage](https://github.com/kvebers/42-Scop/assets/49612380/d316fc79-0414-498c-a170-9d8c77a31e0c)
 
