@@ -4,24 +4,29 @@
 #include <vector>
 
 // Calculating the furthest distance from the X axis
-float calculateDelta(std::map<int, Vector2> &translated) {
-  float maxX = translated.begin()->second.x;
-  float minX = translated.begin()->second.x;
-  float maxY = translated.begin()->second.y;
-  float minY = translated.begin()->second.y;
-  for (auto it = translated.begin(); it != translated.end(); it++) {
-    if (maxX < it->second.x)
-      maxX = it->second.x;
-    if (minX > it->second.x)
-      minX = it->second.x;
-    if (maxY < it->second.y)
-      maxX = it->second.x;
-    if (minY > it->second.y)
-      minY = it->second.y;
+float calculateDelta(std::vector<std::map<int, Vector2>> &translated) {
+  if (translated.empty()) {
+    return 1.0f;
+  }
+  float maxX = translated[0].begin()->second.x;
+  float minX = translated[0].begin()->second.x;
+  float maxY = translated[0].begin()->second.y;
+  float minY = translated[0].begin()->second.y;
+  for (auto itr = translated.begin(); itr != translated.end(); itr++) {
+    for (auto it = itr->begin(); it != itr->end(); it++) {
+      if (maxX < it->second.x)
+        maxX = it->second.x;
+      if (minX > it->second.x)
+        minX = it->second.x;
+      if (maxY < it->second.y)
+        maxY = it->second.x;
+      if (minY > it->second.y)
+        minY = it->second.y;
+    }
   }
   float delta = maxX - minX;
   if (delta < maxY - minY)
-    delta = maxY - minY;
+    delta =    - minY;
   return delta;
 }
 // Spliting QUADS and Triangles into Edges
@@ -47,9 +52,9 @@ std::vector<Edge> Object::CreateEdges() {
       else
         edge.lenX = sqrt(dx * dx + dz * dz);
       if (dy < 0)
-        edge.lenY = -sqrt(dy * dy);
-      else
         edge.lenY = sqrt(dy * dy);
+      else
+        edge.lenY = -sqrt(dy * dy);
       if (std::find(edges.begin(), edges.end(), edge) == edges.end()) {
         edges.push_back(edge);
       }
@@ -105,11 +110,11 @@ void Object::unwrap() {
     objects.push_back(translated);
   }
 
+  float delta = calculateDelta(objects);
   // Iterating Trought Diffrent Objects
   for (auto translated = objects.begin(); translated != objects.end();
        translated++) {
     // NORMALIZING THE DATA
-    float delta = calculateDelta(*translated);
     for (auto it = translated->begin(); it != translated->end(); it++) {
       it->second.x = (it->second.x + delta) / (delta * 2);
       it->second.y = (it->second.y + delta) / (delta * 2);
