@@ -6,7 +6,7 @@
   <img width="1236" alt="Screen Shot 2023-11-18 at 3 32 57 PM" src="https://github.com/kvebers/42-Scop/assets/49612380/8d961e96-cdc5-4f52-939e-f17ad71c65ac">
 </a>
 
-Link to SCOP 2.0
+Press on the Image to get linked to SCOP 2.0
 
 ### 11th Iteration
 
