@@ -140,5 +140,7 @@ void Object::setupPoints() {
       }
     }
   }
-  unwrap();
+  if (_drawData.size() < 2000) {
+    unwrap();
+  }
 }
